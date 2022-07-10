@@ -23,7 +23,7 @@
 
 #include "Foundation/Core/Base.h"
 #include "Foundation/Core/Log.h"
-#include "Foundation/Debug/Instrumentor.h"
+#include "Foundation/Profiling/Instrumentor.h"
 
 // Platform Specific
 #ifdef FD_PLATFORM_WINDOWS

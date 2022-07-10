@@ -81,19 +81,20 @@ namespace Foundation
 				
 				std::string reflectionDataString("#include \"fdpch.h\"\n");
 				reflectionDataString.append("#include <Foundation/Objects/Object.h>\n\n");
+				const size_t stringIncludeIndex = reflectionDataString.size();
 				reflectionDataString.append("namespace reflect{\n");
 				reflectionDataString.append("\tvoid InitApplicationReflection()\n");
 				reflectionDataString.append("\t{\n");
-				reflectionDataString.append("\t\tFoundation::Object* pObject = new Foundation::Object();");
+				reflectionDataString.append("\t\tFoundation::Object* pObject = new Foundation::Object();\n");
 				
 				for (auto& p : fs::recursive_directory_iterator(pathDirectory))
 				{
-					if (!ReadFile(currentDirectoryName, p, reflectionDataString))
+					if (!ReadFile(currentDirectoryName, p, reflectionDataString, stringIncludeIndex))
 						return false;
 				}
 				
-				reflectionDataString.append("\t\tdelete pObject;");
-				reflectionDataString.append("\t\tpObject = nullptr;");
+				reflectionDataString.append("\t\tdelete pObject;\n");
+				reflectionDataString.append("\t\tpObject = nullptr;\n");
 				reflectionDataString.append("\t}\n");
 				reflectionDataString.append("}\n");
 
@@ -109,12 +110,12 @@ namespace Foundation
 		return true;
 	}
 
-	bool CodeGenerator::ReadFile(const std::string& generationDirectoryName, const std::filesystem::directory_entry& file, std::string& reflectedStringData)
+	bool CodeGenerator::ReadFile(const std::string& generationDirectoryName, const std::filesystem::directory_entry& file, std::string& reflectedStringData, const size_t reflectedStringHeaderIncludeIndex)
 	{
 		std::ifstream ifStreamFile(file.path());
 		if (ifStreamFile.is_open())
 		{
-			const auto func = [this, &ifStreamFile, &file, &generationDirectoryName, &reflectedStringData]()
+			const auto func = [this, &ifStreamFile, &file, &generationDirectoryName, &reflectedStringData, &reflectedStringHeaderIncludeIndex]()
 			{
 #if USE_INTERMEDIATE_DIRECTORY
 				const std::string generatedDirectoryString = std::filesystem::current_path().string() + "\\Intermediate\\GeneratedCode\\" + m_configuration + "\\" + generationDirectoryName + "\\";
@@ -144,11 +145,11 @@ namespace Foundation
 				const std::string reflectHeaderInclude = "#include <Reflect.h>";
 
 				if (file.path().string().find("Component", 0) != std::string::npos
-					&& file.path().filename() != "Component")
+					&& file.path().filename() != "Component.h")
 				{
 					// Add this component to the object in the dummy scene.
-					reflectedStringData.append(fileHeaderInclude + "\n");
-					reflectedStringData.append("\t\tpObject->AddComponent<Foundation::" + className + ">();");
+					reflectedStringData.insert(reflectedStringHeaderIncludeIndex, fileHeaderInclude + "\n");
+					reflectedStringData.append("\t\tpObject->AddComponent<Foundation::" + className + ">();\n");
 				}
 
 				generatedCode.append(precompiledHeaderInclude + "\n");

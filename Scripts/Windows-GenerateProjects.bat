@@ -17,4 +17,3 @@ devenv Foundation.sln /rebuild Debug /project Premake
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 popd
-PAUSE

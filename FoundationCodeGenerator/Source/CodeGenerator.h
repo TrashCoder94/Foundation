@@ -23,7 +23,7 @@ namespace Foundation
 			bool Generate();
 
 		private:
-			bool ReadFile(const std::string& intermediateDirectoryName, const std::filesystem::directory_entry& file, std::string& reflectedStringData);
+			bool ReadFile(const std::string& intermediateDirectoryName, const std::filesystem::directory_entry& file, std::string& reflectedStringData, const size_t reflectedStringHeaderIncludeIndex);
 
 			std::vector<std::filesystem::path> m_directories;
 			std::vector<std::string> m_fileExtensions;

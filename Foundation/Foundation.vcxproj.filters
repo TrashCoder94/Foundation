@@ -25,9 +25,6 @@
     <Filter Include="Source\Foundation\Core">
       <UniqueIdentifier>{B4838E4A-A07D-B79C-89EA-4DAD75831D09}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Foundation\Debug">
-      <UniqueIdentifier>{52556B9C-BE8C-B333-C796-1757334DDA2C}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Foundation\Events">
       <UniqueIdentifier>{4052602D-2C77-AFAD-55C2-943D4146AECB}</UniqueIdentifier>
     </Filter>
@@ -42,6 +39,9 @@
     </Filter>
     <Filter Include="Source\Foundation\Particles">
       <UniqueIdentifier>{B29D5274-1EAB-805A-A791-7C45139E4C11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Foundation\Profiling">
+      <UniqueIdentifier>{55B51F1D-C1C2-4D03-4AA9-49EEB6B519BA}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Foundation\Renderer">
       <UniqueIdentifier>{02F1B8FD-EE00-65CE-57BA-C9EC43E95367}</UniqueIdentifier>
@@ -117,9 +117,6 @@
     <ClInclude Include="Source\Foundation\Components\TagComponent.h">
       <Filter>Source\Foundation\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Foundation\Components\TestComponent.h">
-      <Filter>Source\Foundation\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Foundation\Components\TransformComponent.h">
       <Filter>Source\Foundation\Components</Filter>
     </ClInclude>
@@ -177,9 +174,6 @@
     <ClInclude Include="Source\Foundation\Core\Window.h">
       <Filter>Source\Foundation\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Foundation\Debug\Instrumentor.h">
-      <Filter>Source\Foundation\Debug</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Foundation\Events\ApplicationEvent.h">
       <Filter>Source\Foundation\Events</Filter>
     </ClInclude>
@@ -215,6 +209,9 @@
     </ClInclude>
     <ClInclude Include="Source\Foundation\Particles\ParticleSystem.h">
       <Filter>Source\Foundation\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Foundation\Profiling\Instrumentor.h">
+      <Filter>Source\Foundation\Profiling</Filter>
     </ClInclude>
     <ClInclude Include="Source\Foundation\Renderer\Buffer.h">
       <Filter>Source\Foundation\Renderer</Filter>
@@ -1571,9 +1568,6 @@
     <ClCompile Include="..\Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation\TagComponent_gen.cpp">
       <Filter>Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation</Filter>
     </ClCompile>
-    <ClCompile Include="..\Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation\TestComponent_gen.cpp">
-      <Filter>Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation</Filter>
-    </ClCompile>
     <ClCompile Include="..\Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation\TransformComponent_gen.cpp">
       <Filter>Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation</Filter>
     </ClCompile>
@@ -1596,9 +1590,6 @@
       <Filter>Source\Foundation\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\Foundation\Components\TagComponent.cpp">
-      <Filter>Source\Foundation\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Foundation\Components\TestComponent.cpp">
       <Filter>Source\Foundation\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\Foundation\Components\TransformComponent.cpp">

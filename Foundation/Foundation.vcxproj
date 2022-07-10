@@ -167,7 +167,6 @@
     <ClInclude Include="Source\Foundation\Components\ModelComponent.h" />
     <ClInclude Include="Source\Foundation\Components\SpriteComponent.h" />
     <ClInclude Include="Source\Foundation\Components\TagComponent.h" />
-    <ClInclude Include="Source\Foundation\Components\TestComponent.h" />
     <ClInclude Include="Source\Foundation\Components\TransformComponent.h" />
     <ClInclude Include="Source\Foundation\Core\Application.h" />
     <ClInclude Include="Source\Foundation\Core\Assert.h" />
@@ -187,7 +186,6 @@
     <ClInclude Include="Source\Foundation\Core\Types.h" />
     <ClInclude Include="Source\Foundation\Core\UUID.h" />
     <ClInclude Include="Source\Foundation\Core\Window.h" />
-    <ClInclude Include="Source\Foundation\Debug\Instrumentor.h" />
     <ClInclude Include="Source\Foundation\Events\ApplicationEvent.h" />
     <ClInclude Include="Source\Foundation\Events\Event.h" />
     <ClInclude Include="Source\Foundation\Events\KeyEvent.h" />
@@ -200,6 +198,7 @@
     <ClInclude Include="Source\Foundation\Objects\CameraObject.h" />
     <ClInclude Include="Source\Foundation\Objects\Object.h" />
     <ClInclude Include="Source\Foundation\Particles\ParticleSystem.h" />
+    <ClInclude Include="Source\Foundation\Profiling\Instrumentor.h" />
     <ClInclude Include="Source\Foundation\Renderer\Buffer.h" />
     <ClInclude Include="Source\Foundation\Renderer\Camera.h" />
     <ClInclude Include="Source\Foundation\Renderer\FrameBuffer.h" />
@@ -683,10 +682,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation\TestComponent_gen.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation\TransformComponent_gen.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">true</ExcludedFromBuild>
@@ -698,7 +693,6 @@
     <ClCompile Include="Source\Foundation\Components\ModelComponent.cpp" />
     <ClCompile Include="Source\Foundation\Components\SpriteComponent.cpp" />
     <ClCompile Include="Source\Foundation\Components\TagComponent.cpp" />
-    <ClCompile Include="Source\Foundation\Components\TestComponent.cpp" />
     <ClCompile Include="Source\Foundation\Components\TransformComponent.cpp" />
     <ClCompile Include="Source\Foundation\Core\Application.cpp" />
     <ClCompile Include="Source\Foundation\Core\Layer.cpp" />

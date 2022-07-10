@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Foundation/Debug/Instrumentor.h"
+#include "Foundation/Profiling/Instrumentor.h"
 #include "Foundation/Core/Base.h"
 #include <functional>
 

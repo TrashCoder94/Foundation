@@ -34,7 +34,7 @@ jobs:
 
       - name: Build
         working-directory: ${{env.GITHUB_WORKSPACE}}
-        run: Scripts/BuildMachine-Windows-Build.bat
+        run: Scripts/BuildMachine/BuildMachine-Windows-Build.bat
         
       - name: Archive Windows Artifacts
         uses: actions/upload-artifact@v2

@@ -1,5 +1,5 @@
 @echo off
-pushd %~dp0\..\
+pushd %~dp0\..\..\
 
 echo "Building Debug Configuration"
 devenv Foundation.sln /rebuild Debug

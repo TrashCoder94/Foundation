@@ -40,7 +40,7 @@ jobs:
 
       - name: Test
         working-directory: ${{env.GITHUB_WORKSPACE}}
-        run: Scripts/BuildMachine-Windows-Run.bat
+        run: Scripts/BuildMachine/BuildMachine-Windows-Run.bat
           
   # # Linux - Test
   # Linux:

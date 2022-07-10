@@ -1,5 +1,5 @@
 @echo off
-pushd %~dp0\..\
+pushd %~dp0\..\..\
 
 set /P repo=What git repo do you want to add to Foundation/ThirdParty (please reply with .git link not just the normal url)?
 set /P folderName=What do you want to call the parent folder?

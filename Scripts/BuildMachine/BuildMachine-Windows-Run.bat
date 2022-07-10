@@ -1,5 +1,5 @@
 @echo off
-pushd %~dp0\..\
+pushd %~dp0\..\..\
 
 @set MESA_GL_VERSION_OVERRIDE=4.5
 @set MESA_GLSL_VERSION_OVERRIDE=410

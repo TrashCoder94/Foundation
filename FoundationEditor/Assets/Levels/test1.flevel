@@ -1,0 +1,11 @@
+Level: test1
+Objects:
+  - Object: 6158439140555842441
+    m_UUID: -5151863
+    m_Tag: SPRITE
+    m_Position: [0, 0, -4.69999981]
+    m_Rotation: [0, 0, 0]
+    m_Scale: [1, 1, 1]
+    m_Colour: [1, 1, 1, 1]
+    m_pTexture: C:\SideProjects\Repositories\Foundation\FoundationEditor\Assets\Textures\EditorPlayButton.png
+    m_TilingFactor: 1

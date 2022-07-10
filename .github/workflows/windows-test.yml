@@ -1,0 +1,97 @@
+# Name of the stage that will appear in GitHub actions
+name: Windows Test
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  workflow_run:
+    workflows:
+      - "Windows Build"
+    branches:
+      - main
+    types:
+      - completed
+
+env:
+  # Path to the solution file relative to the root of the project.
+  SOLUTION_FILE_PATH: .
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # Windows - Test
+  Windows:
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+    continue-on-error: false
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Download Workflow Artifact
+        uses: dawidd6/action-download-artifact@v2.14.0
+        with:
+          workflow: build.yml
+          name: Windows-Binaries
+          path: Binaries
+
+      - name: Test
+        working-directory: ${{env.GITHUB_WORKSPACE}}
+        run: Scripts/BuildMachine-Windows-Run.bat
+          
+  # # Linux - Test
+  # Linux:
+    # # The type of runner that the job will run on
+    # runs-on: ubuntu-latest
+
+    # # Steps represent a sequence of tasks that will be executed as part of the job
+    # steps:
+      # # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # - name: Checkout Repository
+        # uses: actions/checkout@v2
+        
+      # - name: Download Workflow Artifact
+        # uses: dawidd6/action-download-artifact@v2.14.0
+        # with:
+          # workflow: build.yml
+          # name: Linux-Binaries
+          # path: Binaries
+          
+      # - name: Display structure of downloaded files
+        # run: ls -R
+        
+      # - name: Test
+        # working-directory: ${{env.GITHUB_WORKSPACE}}
+        # run: |
+          # chmod +x Scripts/Linux-Run.sh
+          # Scripts/Linux-Run.sh
+        
+  # # Mac - Test
+  # Mac:
+    # # The type of runner that the job will run on
+    # runs-on: macos-latest
+
+    # # Steps represent a sequence of tasks that will be executed as part of the job
+    # steps:
+      # # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # - name: Checkout Repository
+        # uses: actions/checkout@v2
+        
+      # - name: Download Workflow Artifact
+        # uses: dawidd6/action-download-artifact@v2.14.0
+        # with:
+          # workflow: build.yml
+          # name: Mac-Binaries
+          # path: Binaries
+
+      # - name: Display structure of downloaded files
+        # run: ls -R
+        
+      # - name: Test
+        # working-directory: ${{env.GITHUB_WORKSPACE}}
+        # run: |
+          # chmod +x Scripts/Mac-Run.sh
+          # Scripts/Mac-Run.sh

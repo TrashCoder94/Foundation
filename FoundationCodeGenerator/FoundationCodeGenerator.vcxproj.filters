@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{56EB95D1-428D-C0A7-2B48-D4FB178947F8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty">
+      <UniqueIdentifier>{107145F9-FC28-8746-6530-60A251072237}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\Reflection">
+      <UniqueIdentifier>{CA5DB94A-36CA-7445-FFBD-0CA36BE996AD}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\CodeGenerator.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\Reflection\Reflect.h">
+      <Filter>ThirdParty\Reflection</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\CodeGenerator.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\main.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\Reflection\Example.cpp">
+      <Filter>ThirdParty\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\Reflection\ReflectCommon.cpp">
+      <Filter>ThirdParty\Reflection</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

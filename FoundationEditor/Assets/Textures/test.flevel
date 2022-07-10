@@ -1,0 +1,75 @@
+Level: test
+Objects:
+  - Object
+  - Variables
+  -
+    - m_testFloat
+    - 10
+    - m_pComponents
+    -
+      - IDComponent
+      - Variables
+      -
+        - m_UUID
+        - 1796323259
+      - TagComponent
+      - Variables
+      -
+        - m_Tag
+        - White Square
+      - TransformComponent
+      - Variables
+      -
+        - m_Position
+        - [-1.79999995, 1.39999998, -6.5999999]
+        - m_Rotation
+        - [0, 0, 0]
+        - m_Scale
+        - [1, 1, 1]
+      - SpriteComponent
+      - Variables
+      -
+        - m_Colour
+        - [1, 1, 1, 1]
+        - m_pTexture
+        - m_TilingFactor
+        - 1
+    - m_testInt
+    - 30
+  - Object
+  - Variables
+  -
+    - m_testFloat
+    - 10
+    - m_pComponents
+    -
+      - IDComponent
+      - Variables
+      -
+        - m_UUID
+        - -2020195059
+      - TagComponent
+      - Variables
+      -
+        - m_Tag
+        - Red Sprite
+      - TransformComponent
+      - Variables
+      -
+        - m_Position
+        - [1.5, 0, -4.0999999]
+        - m_Rotation
+        - [0, 0, 0]
+        - m_Scale
+        - [1, 1, 1]
+      - SpriteComponent
+      - Variables
+      -
+        - m_Colour
+        - [1, 0.00392156886, 0, 1]
+        - m_pTexture
+        - [C:\SideProjects\Repositories\Foundation\FoundationEditor\Assets\Textures\Checkerboard.png]
+        - m_TilingFactor
+        - 1
+    - m_testInt
+    - 30

@@ -1,0 +1,27 @@
+[submodule "Foundation/ThirdParty/spdlog"]
+	path = Foundation/ThirdParty/spdlog
+	url = https://github.com/gabime/spdlog.git
+	branch = v1.x
+[submodule "Foundation/ThirdParty/GLFW"]
+	path = Foundation/ThirdParty/GLFW
+	url = https://github.com/TrashCoder94/glfw.git
+	branch = master
+[submodule "Foundation/ThirdParty/imgui"]
+	path = Foundation/ThirdParty/imgui
+	url = https://github.com/TrashCoder94/imgui.git
+	branch = docking
+[submodule "Foundation/ThirdParty/glm"]
+	path = Foundation/ThirdParty/glm
+	url = https://github.com/g-truc/glm.git
+	branch = master
+[submodule "Foundation/ThirdParty/yaml-cpp"]
+	path = Foundation/ThirdParty/yaml-cpp
+	url = https://github.com/TrashCoder94/yaml-cpp.git
+	branch = master
+[submodule "Foundation/ThirdParty/NetworkFramework"]
+	path = Foundation/ThirdParty/NetworkFramework
+	url = https://github.com/TrashCoder94/NetworkFramework.git
+	branch = main
+[submodule "Foundation/ThirdParty/ImGuizmo"]
+	path = Foundation/ThirdParty/ImGuizmo
+	url = https://github.com/TrashCoder94/ImGuizmo.git

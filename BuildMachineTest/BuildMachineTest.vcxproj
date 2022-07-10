@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Distribution|x64">
+      <Configuration>Distribution</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{6A14F4B1-560D-1304-7F3F-F8886B97F20F}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>BuildMachineTest</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\Binaries\Debug-windows-x86_64\BuildMachineTest\</OutDir>
+    <IntDir>..\Intermediate\Debug-windows-x86_64\BuildMachineTest\</IntDir>
+    <TargetName>BuildMachineTest</TargetName>
+    <TargetExt>.exe</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\Binaries\Release-windows-x86_64\BuildMachineTest\</OutDir>
+    <IntDir>..\Intermediate\Release-windows-x86_64\BuildMachineTest\</IntDir>
+    <TargetName>BuildMachineTest</TargetName>
+    <TargetExt>.exe</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\Binaries\Distribution-windows-x86_64\BuildMachineTest\</OutDir>
+    <IntDir>..\Intermediate\Distribution-windows-x86_64\BuildMachineTest\</IntDir>
+    <TargetName>BuildMachineTest</TargetName>
+    <TargetExt>.exe</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>FD_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\Foundation\Source;..\Foundation\ThirdParty\spdlog\include;..\Foundation\ThirdParty\glm;..\Foundation\ThirdParty;..\Foundation\ThirdParty\yaml-cpp\include;..\FoundationCodeGenerator\ThirdParty\Reflection;..\Foundation\ThirdParty\NetworkFramework\ThirdParty\asio-1.18.0\include;..\Foundation\ThirdParty\NetworkFramework\NetworkCommon\include;Assets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalOptions>-IGNORE:4006 %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Foundation\Assets\ (xcopy /Q /E /Y /I $(SolutionDir)\Foundation\Assets $(ProjectDir)\Assets &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Foundation\Assets $(ProjectDir)\Assets &gt; nul)
+IF EXIST $(ProjectDir)Assets\ (xcopy /Q /E /Y /I $(ProjectDir)Assets ..\Binaries\Debug-windows-x86_64\BuildMachineTest\Assets &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)Assets ..\Binaries\Debug-windows-x86_64\BuildMachineTest\Assets &gt; nul)
+IF EXIST $(SolutionDir)Foundation\ThirdParty\OpenGL\ (xcopy /Q /E /Y /I $(SolutionDir)Foundation\ThirdParty\OpenGL ..\Binaries\Debug-windows-x86_64\BuildMachineTest &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Foundation\ThirdParty\OpenGL ..\Binaries\Debug-windows-x86_64\BuildMachineTest &gt; nul)</Command>
+      <Message>Copying Assets to binaries folder!</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>FD_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\Foundation\Source;..\Foundation\ThirdParty\spdlog\include;..\Foundation\ThirdParty\glm;..\Foundation\ThirdParty;..\Foundation\ThirdParty\yaml-cpp\include;..\FoundationCodeGenerator\ThirdParty\Reflection;..\Foundation\ThirdParty\NetworkFramework\ThirdParty\asio-1.18.0\include;..\Foundation\ThirdParty\NetworkFramework\NetworkCommon\include;Assets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalOptions>-IGNORE:4006 %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Foundation\Assets\ (xcopy /Q /E /Y /I $(SolutionDir)\Foundation\Assets $(ProjectDir)\Assets &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Foundation\Assets $(ProjectDir)\Assets &gt; nul)
+IF EXIST $(ProjectDir)Assets\ (xcopy /Q /E /Y /I $(ProjectDir)Assets ..\Binaries\Release-windows-x86_64\BuildMachineTest\Assets &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)Assets ..\Binaries\Release-windows-x86_64\BuildMachineTest\Assets &gt; nul)
+IF EXIST $(SolutionDir)Foundation\ThirdParty\OpenGL\ (xcopy /Q /E /Y /I $(SolutionDir)Foundation\ThirdParty\OpenGL ..\Binaries\Release-windows-x86_64\BuildMachineTest &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Foundation\ThirdParty\OpenGL ..\Binaries\Release-windows-x86_64\BuildMachineTest &gt; nul)</Command>
+      <Message>Copying Assets to binaries folder!</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>FD_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\Foundation\Source;..\Foundation\ThirdParty\spdlog\include;..\Foundation\ThirdParty\glm;..\Foundation\ThirdParty;..\Foundation\ThirdParty\yaml-cpp\include;..\FoundationCodeGenerator\ThirdParty\Reflection;..\Foundation\ThirdParty\NetworkFramework\ThirdParty\asio-1.18.0\include;..\Foundation\ThirdParty\NetworkFramework\NetworkCommon\include;Assets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalOptions>-IGNORE:4006 %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)\Foundation\Assets\ (xcopy /Q /E /Y /I $(SolutionDir)\Foundation\Assets $(ProjectDir)\Assets &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)\Foundation\Assets $(ProjectDir)\Assets &gt; nul)
+IF EXIST $(ProjectDir)Assets\ (xcopy /Q /E /Y /I $(ProjectDir)Assets ..\Binaries\Distribution-windows-x86_64\BuildMachineTest\Assets &gt; nul) ELSE (xcopy /Q /Y /I $(ProjectDir)Assets ..\Binaries\Distribution-windows-x86_64\BuildMachineTest\Assets &gt; nul)
+IF EXIST $(SolutionDir)Foundation\ThirdParty\OpenGL\ (xcopy /Q /E /Y /I $(SolutionDir)Foundation\ThirdParty\OpenGL ..\Binaries\Distribution-windows-x86_64\BuildMachineTest &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)Foundation\ThirdParty\OpenGL ..\Binaries\Distribution-windows-x86_64\BuildMachineTest &gt; nul)</Command>
+      <Message>Copying Assets to binaries folder!</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\BuildMachineTestLayer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\BuildMachineTestApp.cpp" />
+    <ClCompile Include="Source\BuildMachineTestLayer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Foundation\Foundation.vcxproj">
+      <Project>{9C8483D0-883C-C51D-F143-9E79DD1A600E}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

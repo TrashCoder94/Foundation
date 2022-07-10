@@ -348,3 +348,17 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# Project Specific
+**/Binaries/
+**/Intermediate/
+*.log
+
+# Allow
+!ThirdParty/premake/Binaries/
+!Foundation/Source/Foundation/Debug/Instrumentor.h
+!Foundation/ThirdParty/assimp/code/AssetLib/**
+
+#**.vcxproj
+#**.vcxproj.filters
+#**.vcxproj.user

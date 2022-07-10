@@ -1,0 +1,48 @@
+{
+    "Level": {
+        "Name": "test-json",
+        "Objects": {
+            "Red Triangle": {
+                "m_testFloat": 10.0,
+                "m_pComponents": {
+                    "IDComponent": {
+                        "m_UUID": 800746278
+                    },
+                    "TagComponent": {
+                        "m_Tag": "Red Triangle"
+                    },
+                    "TransformComponent": {
+                        "m_Position": {
+                            "X": -1.7000000476837158,
+                            "Y": 0.800000011920929,
+                            "Z": -4.099999904632568
+                        },
+                        "m_Rotation": {
+                            "X": 0.0,
+                            "Y": 0.0,
+                            "Z": 0.0
+                        },
+                        "m_Scale": {
+                            "X": 1.0,
+                            "Y": 1.0,
+                            "Z": 1.0
+                        }
+                    },
+                    "SpriteComponent": {
+                        "m_Colour": {
+                            "r": 1.0,
+                            "g": 0.0,
+                            "b": 0.0,
+                            "a": 1.0
+                        },
+                        "m_pTexture": {
+                            "m_Filepath": "C:\\SideProjects\\Repositories\\Foundation\\FoundationEditor\\Assets\\Textures\\EditorPlayButton.png"
+                        },
+                        "m_TilingFactor": 1.0
+                    }
+                },
+                "m_testInt": 30
+            }
+        }
+    }
+}

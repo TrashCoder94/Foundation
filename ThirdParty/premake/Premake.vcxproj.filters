@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="..">
+      <UniqueIdentifier>{61705900-4DFC-870B-B6AA-880BA255880B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\BuildMachineTest">
+      <UniqueIdentifier>{1572F3AC-81D3-D0BA-0A41-176D76A1077A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Examples">
+      <UniqueIdentifier>{0F1F14AC-7BD4-8CA1-04C9-8678707D83A5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Examples\Sandbox">
+      <UniqueIdentifier>{EDF788A4-5959-66B2-E2C6-AC644E279D71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Foundation">
+      <UniqueIdentifier>{07BEA492-737E-20C9-3CB9-6946A83865A5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Foundation\ThirdParty">
+      <UniqueIdentifier>{6164B659-4D89-05DA-76D4-EA69625804F8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Foundation\ThirdParty\GLFW">
+      <UniqueIdentifier>{40041405-AC1C-FB2E-75C9-8AC8E1A08FC8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Foundation\ThirdParty\Glad">
+      <UniqueIdentifier>{E88F1405-54A8-FB2E-1D55-8BC8892C90C8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Foundation\ThirdParty\NetworkFramework">
+      <UniqueIdentifier>{8864E0FC-F47E-439E-3DA1-5332A9FA6AA5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Foundation\ThirdParty\assimp">
+      <UniqueIdentifier>{5DF8A6D9-C9DB-B519-D2DE-E3553E417C6A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Foundation\ThirdParty\imgui">
+      <UniqueIdentifier>{8B760EAA-779C-D810-60E2-5DDC4CA7FDDC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Foundation\ThirdParty\yaml-cpp">
+      <UniqueIdentifier>{3348EE8D-9FB6-430D-E89F-FE0C544D39A9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\FoundationCodeGenerator">
+      <UniqueIdentifier>{89A75342-75B7-FF12-DE70-6431CA9FEEAB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\FoundationEditor">
+      <UniqueIdentifier>{0EFDD379-7A5E-B187-03CC-F7396F2CE846}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\FoundationServer">
+      <UniqueIdentifier>{FE44939A-6AA6-70A8-F313-B75A5F74A767}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\BuildMachineTest\premake5.lua">
+      <Filter>..\BuildMachineTest</Filter>
+    </None>
+    <None Include="..\..\Examples\Sandbox\premake5.lua">
+      <Filter>..\Examples\Sandbox</Filter>
+    </None>
+    <None Include="..\..\Foundation\ThirdParty\GLFW\premake5.lua">
+      <Filter>..\Foundation\ThirdParty\GLFW</Filter>
+    </None>
+    <None Include="..\..\Foundation\ThirdParty\Glad\premake5.lua">
+      <Filter>..\Foundation\ThirdParty\Glad</Filter>
+    </None>
+    <None Include="..\..\Foundation\ThirdParty\NetworkFramework\premake5.lua">
+      <Filter>..\Foundation\ThirdParty\NetworkFramework</Filter>
+    </None>
+    <None Include="..\..\Foundation\ThirdParty\assimp\premake5.lua">
+      <Filter>..\Foundation\ThirdParty\assimp</Filter>
+    </None>
+    <None Include="..\..\Foundation\ThirdParty\imgui\premake5.lua">
+      <Filter>..\Foundation\ThirdParty\imgui</Filter>
+    </None>
+    <None Include="..\..\Foundation\ThirdParty\yaml-cpp\premake5.lua">
+      <Filter>..\Foundation\ThirdParty\yaml-cpp</Filter>
+    </None>
+    <None Include="..\..\Foundation\premake5.lua">
+      <Filter>..\Foundation</Filter>
+    </None>
+    <None Include="..\..\FoundationCodeGenerator\premake5.lua">
+      <Filter>..\FoundationCodeGenerator</Filter>
+    </None>
+    <None Include="..\..\FoundationEditor\premake5.lua">
+      <Filter>..\FoundationEditor</Filter>
+    </None>
+    <None Include="..\..\FoundationServer\premake5.lua">
+      <Filter>..\FoundationServer</Filter>
+    </None>
+    <None Include="..\..\premake5.lua">
+      <Filter>..</Filter>
+    </None>
+    <None Include="premake5.lua" />
+  </ItemGroup>
+</Project>

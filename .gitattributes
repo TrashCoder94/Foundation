@@ -1,0 +1,2 @@
+Foundation/ThirdParty/assimp/Binaries/* filter=lfs diff=lfs merge=lfs -text
+Foundation/ThirdParty/assimp/Binaries/** filter=lfs diff=lfs merge=lfs -text

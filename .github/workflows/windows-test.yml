@@ -34,7 +34,7 @@ jobs:
       - name: Download Workflow Artifact
         uses: dawidd6/action-download-artifact@v2.14.0
         with:
-          workflow: build.yml
+          workflow: windows-build.yml
           name: Windows-Binaries
           path: Binaries
 

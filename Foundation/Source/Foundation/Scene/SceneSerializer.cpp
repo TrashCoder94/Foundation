@@ -752,6 +752,8 @@ namespace Foundation
 				{
 					if (BaseObject* pClass = ((BaseObject*)memberPtr))
 					{
+						pClass->SetOwner(pBaseObject);
+
 						const reflect::TypeDescriptor_Struct& classTypeDescriptor{ pClass->GetTypeDescription() };
 						const std::string& classTypeName{ classTypeDescriptor.getFullName() };
 						for (const reflect::TypeDescriptor_Struct::Member& classMember : classTypeDescriptor.members)
@@ -861,6 +863,8 @@ namespace Foundation
 								{
 									if (BaseObject* pDeserializedClassObject = (BaseObject*)pConstructedClassObject)
 									{
+										pDeserializedClassObject->SetOwner(pBaseObject);
+
 										// Deserialize all of the members of this new base object now
 										const reflect::TypeDescriptor_Struct& deserializedClassTypeDescription = pDeserializedClassObject->GetTypeDescription();
 										for (const reflect::TypeDescriptor_Struct::Member& deserializedClassMember : deserializedClassTypeDescription.members)

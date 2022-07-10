@@ -201,13 +201,15 @@ namespace Foundation
 		{
 			const fs::path& filePath(filepath);
 			const size_t& inputFileSize = static_cast<size_t>(fs::file_size(filePath));
-			
 			file.seekg(0, std::ios::end);
 			result.resize(file.tellg());
 			file.seekg(0, std::ios::beg);
 			if (result.size() <= inputFileSize)
 			{
-				file.read(&result[0], result.size());
+				if (!file.read(&result[0], result.size()))
+				{
+					FD_CORE_LOG_ERROR("Unable to read file {0} {1} bytes", filepath.c_str(), inputFileSize);
+				}
 			}
 			else
 			{

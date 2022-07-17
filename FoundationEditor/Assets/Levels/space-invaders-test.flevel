@@ -1,6 +1,6 @@
 {
     "Level": {
-        "Name": "Untitled",
+        "Name": "space-invaders-test",
         "Objects": {
             "CameraObject": {
                 "m_testFloat": 10.0,
@@ -10,7 +10,7 @@
                         "m_FixedAspectRatio": true
                     },
                     "IDComponent": {
-                        "m_UUID": -315177257
+                        "m_UUID": 627726127
                     },
                     "TagComponent": {
                         "m_Tag": "CameraObject"
@@ -38,18 +38,23 @@
             "PlayerObject": {
                 "m_testFloat": 10.0,
                 "m_pComponents": {
+                    "InputComponent": {
+                        "m_UUID": -1902495927
+                    },
                     "SpriteComponent": {
                         "m_Colour": {
-                            "r": 0.0,
-                            "g": 0.0,
+                            "r": 1.0,
+                            "g": 1.0,
                             "b": 1.0,
                             "a": 1.0
                         },
-                        "m_pTexture": null,
+                        "m_pTexture": {
+                            "m_Filepath": "C:\\SideProjects\\Repositories\\Foundation\\FoundationEditor\\Assets\\Textures\\Tray.png"
+                        },
                         "m_TilingFactor": 1.0
                     },
                     "IDComponent": {
-                        "m_UUID": -551428477
+                        "m_UUID": 420769908
                     },
                     "TagComponent": {
                         "m_Tag": "PlayerObject"
@@ -58,7 +63,7 @@
                         "m_Position": {
                             "X": 0.0,
                             "Y": -2.0,
-                            "Z": -6.5
+                            "Z": -7.0
                         },
                         "m_Rotation": {
                             "X": 0.0,
@@ -70,12 +75,15 @@
                             "Y": 1.0,
                             "Z": 1.0
                         }
-                    },
-                    "InputComponent": {
-                        "m_UUID": 1042369668
                     }
                 },
-                "m_testInt": 30
+                "m_testInt": 30,
+                "m_BulletSpeed": 10.0,
+                "m_BulletSize": {
+                    "X": 0.25,
+                    "Y": 0.5,
+                    "Z": 0.5
+                }
             }
         }
     }

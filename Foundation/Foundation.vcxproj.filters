@@ -273,6 +273,9 @@
     <ClInclude Include="Source\Foundation\Scene\SceneSerializer.h">
       <Filter>Source\Foundation\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Foundation\SpaceInvadersTest\BulletObject.h">
+      <Filter>Source\Foundation\SpaceInvadersTest</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Foundation\SpaceInvadersTest\PlayerObject.h">
       <Filter>Source\Foundation\SpaceInvadersTest</Filter>
     </ClInclude>
@@ -1544,6 +1547,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation\BulletObject_gen.cpp">
+      <Filter>Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation</Filter>
+    </ClCompile>
     <ClCompile Include="..\Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation\CameraComponent_gen.cpp">
       <Filter>Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation</Filter>
     </ClCompile>
@@ -1711,6 +1717,9 @@
     </ClCompile>
     <ClCompile Include="Source\Foundation\Scene\SceneSerializer.cpp">
       <Filter>Source\Foundation\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Foundation\SpaceInvadersTest\BulletObject.cpp">
+      <Filter>Source\Foundation\SpaceInvadersTest</Filter>
     </ClCompile>
     <ClCompile Include="Source\Foundation\SpaceInvadersTest\PlayerObject.cpp">
       <Filter>Source\Foundation\SpaceInvadersTest</Filter>

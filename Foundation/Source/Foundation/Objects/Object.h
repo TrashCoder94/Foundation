@@ -26,9 +26,12 @@ namespace Foundation
 
 			~Object();
 
+			virtual void Create() override;
 			virtual void Start() override;
 			virtual void Update(float deltaTime) override;
 			virtual void End() override;
+			virtual void Destroy() override;
+
 			virtual void OnEvent(Event& event) override;
 
 			template<class T, typename... Args>

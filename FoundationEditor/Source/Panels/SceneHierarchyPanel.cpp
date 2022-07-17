@@ -154,7 +154,18 @@ namespace Foundation
 
 	void SceneHierarchyPanel::DrawObjectNode(Object* pObject)
 	{
-		std::string& tag = pObject->GetComponent<TagComponent>()->m_Tag;
+		if (!pObject)
+		{
+			return;
+		}
+
+		TagComponent* pTagComponent = pObject->GetComponent<TagComponent>();
+		if(!pTagComponent)
+		{
+			return;
+		}
+
+		std::string& tag = pTagComponent->m_Tag;
 
 		ImGuiTreeNodeFlags flags = ((m_pSelectedObject == pObject) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
 		flags |= ImGuiTreeNodeFlags_SpanAvailWidth;

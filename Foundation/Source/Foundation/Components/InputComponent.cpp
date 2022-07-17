@@ -34,6 +34,18 @@ namespace Foundation
 	}
 
 	template<>
+	bool InputComponent::BindInputFunction<KeyReleasedEvent>(BaseObject* pFunctionOwner, InputEventFunc<KeyReleasedEvent> func)
+	{
+		if (m_KeyReleasedFunctions.find(pFunctionOwner) != m_KeyReleasedFunctions.end())
+		{
+			return false;
+		}
+
+		m_KeyReleasedFunctions.emplace(pFunctionOwner, func);
+		return true;
+	}
+
+	template<>
 	bool InputComponent::BindInputFunction<MouseMovedEvent>(BaseObject* pFunctionOwner, InputEventFunc<MouseMovedEvent> func)
 	{
 		if (m_MouseMovedFunctions.find(pFunctionOwner) != m_MouseMovedFunctions.end())
@@ -89,6 +101,7 @@ namespace Foundation
 		{
 			EventDispatcher dispatcher(event);
 			dispatcher.Dispatch<KeyPressedEvent>(FD_BIND_EVENT_FN(InputComponent::OnKeyPressed));
+			dispatcher.Dispatch<KeyReleasedEvent>(FD_BIND_EVENT_FN(InputComponent::OnKeyReleased));
 			dispatcher.Dispatch<MouseMovedEvent>(FD_BIND_EVENT_FN(InputComponent::OnMouseMoved));
 			dispatcher.Dispatch<MouseScrolledEvent>(FD_BIND_EVENT_FN(InputComponent::OnMouseScrolled));
 			dispatcher.Dispatch<MouseButtonPressedEvent>(FD_BIND_EVENT_FN(InputComponent::OnMouseButtonPressed));
@@ -98,6 +111,14 @@ namespace Foundation
 	bool InputComponent::OnKeyPressed(KeyPressedEvent& event)
 	{
 		for (const std::pair<BaseObject*, std::function<bool(KeyPressedEvent&)>> funcMap : m_KeyPressedFunctions)
+			funcMap.second(event);
+
+		return false;
+	}
+
+	bool InputComponent::OnKeyReleased(KeyReleasedEvent& event)
+	{
+		for (const std::pair<BaseObject*, std::function<bool(KeyReleasedEvent&)>> funcMap : m_KeyReleasedFunctions)
 			funcMap.second(event);
 
 		return false;

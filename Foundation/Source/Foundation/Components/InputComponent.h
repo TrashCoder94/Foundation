@@ -8,6 +8,7 @@ namespace Foundation
 {
 	class Event;
 	class KeyPressedEvent;
+	class KeyReleasedEvent;
 	class MouseMovedEvent;
 	class MouseScrolledEvent;
 	class MouseButtonPressedEvent;
@@ -37,11 +38,13 @@ namespace Foundation
 
 	private:
 		bool OnKeyPressed(KeyPressedEvent& event);
+		bool OnKeyReleased(KeyReleasedEvent& event);
 		bool OnMouseMoved(MouseMovedEvent& event);
 		bool OnMouseScrolled(MouseScrolledEvent& event);
 		bool OnMouseButtonPressed(MouseButtonPressedEvent& event);
 
 		std::map<BaseObject*, std::function<bool(KeyPressedEvent&)>>			m_KeyPressedFunctions;
+		std::map<BaseObject*, std::function<bool(KeyReleasedEvent&)>>			m_KeyReleasedFunctions;
 		std::map<BaseObject*, std::function<bool(MouseMovedEvent&)>>			m_MouseMovedFunctions;
 		std::map<BaseObject*, std::function<bool(MouseScrolledEvent&)>>			m_MouseScrolledFunctions;
 		std::map<BaseObject*, std::function<bool(MouseButtonPressedEvent&)>>	m_MouseButtonFunctions;

@@ -29,18 +29,6 @@ namespace Foundation
 
 	Scene::~Scene()
 	{
-		/*for (Object* pObject : m_pObjects)
-		{
-			if (!pObject)
-				continue;
-
-			pObject->End();
-			delete pObject;
-			pObject = nullptr;
-		}
-
-		m_pObjects.clear();
-		m_pObjectMap.clear();*/
 	}
 
 	void Scene::Create()
@@ -50,10 +38,14 @@ namespace Foundation
 		FD_PROFILE_FUNCTION();
 
 		if (m_pCurrentCameraObject)
-			m_pCurrentCameraObject->Create();
-
-		auto func = [](Object* pObject)
 		{
+			m_pCurrentCameraObject->SetOwner(this);
+			m_pCurrentCameraObject->Create();
+		}
+
+		auto func = [this](Object* pObject)
+		{
+			pObject->SetOwner(this);
 			pObject->Create();
 		};
 		IterateObjects(func);
@@ -98,11 +90,19 @@ namespace Foundation
 			m_pCurrentCameraObject->End();
 		}
 
-		auto func = [](Object* pObject)
+		if (m_pObjects.size() > 0)
 		{
-			pObject->End();
-		};
-		IterateObjects(func);
+			for (size_t iO = m_pObjects.size() - 1; iO > 0; --iO)
+			{
+				Object* pObject = m_pObjects.at(iO);
+				if (!pObject)
+				{
+					continue;
+				}
+
+				pObject->End();
+			}
+		}
 	}
 
 	void Scene::Destroy()
@@ -115,11 +115,20 @@ namespace Foundation
 			m_pCurrentCameraObject = nullptr;
 		}
 
-		auto func = [](Object* pObject)
+		for (size_t iO = m_pObjects.size() - 1; iO > 0; --iO)
 		{
+			Object* pObject = m_pObjects.at(iO);
+			if (!pObject)
+			{
+				continue;
+			}
+
 			pObject->Destroy();
-		};
-		IterateObjects(func);
+			delete pObject;
+			pObject = nullptr;
+		}
+
+		m_pObjects.clear();
 	}
 
 	Object* Scene::CreateObject(const std::string& name /*= "Object"*/)
@@ -169,6 +178,23 @@ namespace Foundation
 
 		m_pObjects.push_back(pObject);
 	}
+
+	void Scene::RemoveObject(Object* pObject)
+	{
+		if (!pObject)
+		{
+			return;
+		}
+
+		for (std::vector<Object*>::iterator it = m_pObjects.begin(); it != m_pObjects.end(); ++it)
+		{
+			if (*it == pObject)
+			{
+				m_pObjects.erase(it);
+				break;
+			}
+		}
+	}
 	
 	const std::vector<Object*>& Scene::GetObjects() const
 	{
@@ -216,23 +242,6 @@ namespace Foundation
 				break;
 			}
 		}
-
-		/*for (size_t iO = m_pObjects.size(); iO > 0; --iO)
-		{
-			Object* pSceneObject = m_pObjects[iO];
-			if (!pSceneObject)
-				continue;
-
-			if (pObject == pSceneObject)
-			{
-				pSceneObject->End();
-				delete pSceneObject;
-				pSceneObject = nullptr;
-
-				m_pObjects.erase(m_pObjects.begin() + iO);
-				break;
-			}
-		}*/
 	}
 
 	void Scene::Render()
@@ -301,7 +310,10 @@ namespace Foundation
 
 		auto func = [&event](Object* pObject)
 		{
-			pObject->OnEvent(event);
+			if (pObject)
+			{
+				pObject->OnEvent(event);
+			}
 		};
 		IterateObjects(func);
 	}
@@ -345,11 +357,11 @@ namespace Foundation
 
 	void Scene::IterateObjects(std::function<void(Object*)> function)
 	{
-		for (Object* pObject : m_pObjects)
+		for(Object* pObject : m_pObjects)
 		{
 			if (!pObject)
 				continue;
-			
+
 			function(pObject);
 		}
 	}

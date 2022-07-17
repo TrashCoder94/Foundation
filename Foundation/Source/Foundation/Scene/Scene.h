@@ -34,6 +34,8 @@ namespace Foundation
 			Object* CreateObject(const std::string& name = "Object");
 			void AddObject(Object* pObject, const std::string& name = "Object");
 
+			void RemoveObject(Object* pObject);
+
 			template<class T>
 			T* CreateObject(const std::string& name = "Object")
 			{
@@ -112,7 +114,6 @@ namespace Foundation
 			uint32_t m_ViewportWidth;
 			uint32_t m_ViewportHeight;
 			bool m_Running;
-			std::unordered_map<UUID, Object*> m_pObjectMap;
 			
 			friend class Object;
 			friend class SceneSerializer;

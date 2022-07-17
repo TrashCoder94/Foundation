@@ -218,6 +218,7 @@
     <ClInclude Include="Source\Foundation\Scene\Scene.h" />
     <ClInclude Include="Source\Foundation\Scene\SceneCamera.h" />
     <ClInclude Include="Source\Foundation\Scene\SceneSerializer.h" />
+    <ClInclude Include="Source\Foundation\SpaceInvadersTest\BulletObject.h" />
     <ClInclude Include="Source\Foundation\SpaceInvadersTest\PlayerObject.h" />
     <ClInclude Include="Source\Foundation\Utilities\PlatformUtilities.h" />
     <ClInclude Include="Source\Platform\OpenGL\OpenGLBuffer.h" />
@@ -643,6 +644,10 @@
     <ClInclude Include="ThirdParty\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation\BulletObject_gen.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation\CameraComponent_gen.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">true</ExcludedFromBuild>
@@ -738,6 +743,7 @@
     <ClCompile Include="Source\Foundation\Scene\Scene.cpp" />
     <ClCompile Include="Source\Foundation\Scene\SceneCamera.cpp" />
     <ClCompile Include="Source\Foundation\Scene\SceneSerializer.cpp" />
+    <ClCompile Include="Source\Foundation\SpaceInvadersTest\BulletObject.cpp" />
     <ClCompile Include="Source\Foundation\SpaceInvadersTest\PlayerObject.cpp" />
     <ClCompile Include="Source\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="Source\Platform\OpenGL\OpenGLContext.cpp" />

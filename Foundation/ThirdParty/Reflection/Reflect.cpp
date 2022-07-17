@@ -6,6 +6,7 @@
 #include "Foundation/Core/UUID.h"
 #include "Foundation/Renderer/Model.h"
 #include "Foundation/Renderer/Texture.h"
+#include "Foundation/SpaceInvadersTest/BulletObject.h"
 #include <glm/glm.hpp>
 
 namespace reflect {
@@ -158,6 +159,40 @@ namespace reflect {
 	template <>
 	TypeDescriptor* getPrimitiveDescriptor<Foundation::Component*>() {
 		static TypeDescriptor_ComponentPointer typeDesc;
+		return &typeDesc;
+	}
+
+	//--------------------------------------------------------
+	// A type descriptor for BaseObject Pointer
+	//--------------------------------------------------------
+
+	struct TypeDescriptor_BaseObjectPointer : TypeDescriptor_Struct {
+		TypeDescriptor_BaseObjectPointer() : TypeDescriptor_Struct{ "BaseObject*", sizeof(Foundation::BaseObject*), {} } {
+		}
+		virtual void dump(const void* obj, int /* unused */) const override {
+			const Foundation::BaseObject* pBaseObject = (const Foundation::BaseObject*)obj;
+			std::cout << "BaseObject*{" << name << "}";
+		}
+	};
+
+	template <>
+	TypeDescriptor* getPrimitiveDescriptor<Foundation::BaseObject*>() {
+		static TypeDescriptor_BaseObjectPointer typeDesc;
+		return &typeDesc;
+	}
+
+	struct TypeDescriptor_BulletObjectPointer : TypeDescriptor_Struct {
+		TypeDescriptor_BulletObjectPointer() : TypeDescriptor_Struct{ "BulletObject*", sizeof(Foundation::BulletObject*), {} } {
+		}
+		virtual void dump(const void* obj, int /* unused */) const override {
+			const Foundation::BulletObject* pBulletObject = (const Foundation::BulletObject*)obj;
+			std::cout << "BulletObject*{" << name << "}";
+		}
+	};
+
+	template <>
+	TypeDescriptor* getPrimitiveDescriptor<Foundation::BulletObject*>() {
+		static TypeDescriptor_BulletObjectPointer typeDesc;
 		return &typeDesc;
 	}
 }

@@ -16,7 +16,17 @@ namespace Foundation
 
 	Object::~Object()
 	{
-		End();
+	}
+
+	void Object::Create()
+	{
+		BaseObject::Create();
+
+		auto func = [](Component* pComponent)
+		{
+			pComponent->Create();
+		};
+		IterateComponents(func);
 	}
 
 	void Object::Start()
@@ -48,6 +58,17 @@ namespace Foundation
 		auto func = [](Component* pComponent)
 		{
 			pComponent->End();
+		};
+		IterateComponents(func);
+	}
+
+	void Object::Destroy()
+	{
+		BaseObject::Destroy();
+
+		auto func = [](Component* pComponent)
+		{
+			pComponent->Destroy();
 			delete pComponent;
 			pComponent = nullptr;
 		};
@@ -58,6 +79,8 @@ namespace Foundation
 
 	void Object::OnEvent(Event& event)
 	{
+		BaseObject::OnEvent(event);
+
 		auto func = [&event](Component* pComponent)
 		{
 			pComponent->OnEvent(event);
@@ -141,8 +164,9 @@ namespace Foundation
 
 	void Object::IterateComponents(std::function<void(Component*)> func)
 	{
-		for (Component* pComponent : m_pComponents)
+		for(std::vector<Component*>::iterator it = m_pComponents.begin(); it != m_pComponents.end(); ++it)
 		{
+			Component* pComponent = *it;
 			if (!pComponent)
 				continue;
 
@@ -162,13 +186,14 @@ namespace Foundation
 
 	Scene* Object::GetScene()
 	{
-		return (Scene*)(GetOwner());
+		return static_cast<Scene*>(GetOwner());
 	}
 
 	const Scene* Object::GetScene() const
 	{
-		return (Scene*)(GetOwner());
+		return static_cast<const Scene*>(GetOwner());
 	}
+
 	const std::vector<Component*>& Object::GetComponents() const
 	{
 		return m_pComponents;

@@ -589,6 +589,13 @@ namespace Foundation
 		SceneSerializer editorSerializer(m_pEditorScene);
 		editorSerializer.Serialize(m_CurrentSceneFilepath);
 
+		if (m_pRuntimeScene)
+		{
+			m_pRuntimeScene->End();
+			m_pRuntimeScene->Destroy();
+			m_pRuntimeScene = nullptr;
+		}
+
 		// So we can make sure the runtime scene uses all of the correct data from the editor
 		// when we deserialize.
 		m_SceneState = SceneState::Play;
@@ -632,9 +639,11 @@ namespace Foundation
 	{
 		m_SceneState = SceneState::Edit;
 		m_SceneHierarchyPanel.SetScene(m_pEditorScene);
+		
 		m_pRuntimeScene->End();
 		m_pRuntimeScene->Destroy();
 		m_pRuntimeScene = nullptr;
+
 		CreateEditorCamera();
 		m_pEditorCamera->GetComponent<InputComponent>()->EnableInput();
 	}

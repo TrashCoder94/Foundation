@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Component.h"
+#include "Foundation/Components/Component.h"
 #include "Foundation/Scene/SceneCamera.h"
 
 namespace Foundation

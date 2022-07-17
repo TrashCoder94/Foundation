@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Reflect.h>
+#include "Foundation/Core/Log.h"
 
 namespace Foundation
 {
@@ -9,14 +10,8 @@ namespace Foundation
 	class BaseObject
 	{
 		public:
-			BaseObject() :
-				m_pOwner(nullptr)
-			{}
-
-			virtual ~BaseObject()
-			{
-				m_pOwner = nullptr;
-			}
+			BaseObject();
+			virtual ~BaseObject();
 
 			template<typename T>
 			bool Is()
@@ -25,9 +20,13 @@ namespace Foundation
 				return bIsSameType;
 			}
 
+			void Copy(BaseObject* pSourceObject);
+
+			virtual void Create() {}
 			virtual void Start() {}
 			virtual void Update(float deltaTime) {}
 			virtual void End() {}
+			virtual void Destroy() {}
 
 			virtual void OnEvent(Event& event) {}
 

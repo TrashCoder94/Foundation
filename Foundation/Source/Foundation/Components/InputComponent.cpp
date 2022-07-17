@@ -6,45 +6,77 @@
 
 namespace Foundation
 {
-	InputComponent::InputComponent() : Component()
+	InputComponent::InputComponent() : Component(),
+		m_UUID(),
+		m_InputEnabled(true)
 	{}
 
 	InputComponent::~InputComponent()
 	{}
 
 	template<typename T>
-	bool InputComponent::BindInputFunction(InputEventFunc<T> func)
+	bool InputComponent::BindInputFunction(BaseObject* pFunctionOwner, InputEventFunc<T> func)
 	{
 		FD_CORE_ASSERT(false, "Please implement the template function for whatever input event you are using");
 		return false;
 	}
 
 	template<>
-	bool InputComponent::BindInputFunction<KeyPressedEvent>(InputEventFunc<KeyPressedEvent> func)
+	bool InputComponent::BindInputFunction<KeyPressedEvent>(BaseObject* pFunctionOwner, InputEventFunc<KeyPressedEvent> func)
 	{
-		m_KeyPressedFunctions.push_back(func);
+		if (m_KeyPressedFunctions.find(pFunctionOwner) != m_KeyPressedFunctions.end())
+		{
+			return false;
+		}
+
+		m_KeyPressedFunctions.emplace(pFunctionOwner, func);
 		return true;
 	}
 
 	template<>
-	bool InputComponent::BindInputFunction<MouseMovedEvent>(InputEventFunc<MouseMovedEvent> func)
+	bool InputComponent::BindInputFunction<MouseMovedEvent>(BaseObject* pFunctionOwner, InputEventFunc<MouseMovedEvent> func)
 	{
-		m_MouseMovedFunctions.push_back(func);
+		if (m_MouseMovedFunctions.find(pFunctionOwner) != m_MouseMovedFunctions.end())
+		{
+			return false;
+		}
+
+		m_MouseMovedFunctions.emplace(pFunctionOwner, func);
 		return true;
 	}
 
 	template<>
-	bool InputComponent::BindInputFunction<MouseScrolledEvent>(InputEventFunc<MouseScrolledEvent> func)
+	bool InputComponent::BindInputFunction<MouseScrolledEvent>(BaseObject* pFunctionOwner, InputEventFunc<MouseScrolledEvent> func)
 	{
-		m_MouseScrolledFunctions.push_back(func);
+		if (m_MouseScrolledFunctions.find(pFunctionOwner) != m_MouseScrolledFunctions.end())
+		{
+			return false;
+		}
+
+		m_MouseScrolledFunctions.emplace(pFunctionOwner, func);
 		return true;
 	}
 
 	template<>
-	bool InputComponent::BindInputFunction<MouseButtonPressedEvent>(InputEventFunc<MouseButtonPressedEvent> func)
+	bool InputComponent::BindInputFunction<MouseButtonPressedEvent>(BaseObject* pFunctionOwner, InputEventFunc<MouseButtonPressedEvent> func)
 	{
-		m_MouseButtonFunctions.push_back(func);
+		if (m_MouseButtonFunctions.find(pFunctionOwner) != m_MouseButtonFunctions.end())
+		{
+			return false;
+		}
+
+		m_MouseButtonFunctions.emplace(pFunctionOwner, func);
 		return true;
+	}
+
+	void InputComponent::EnableInput()
+	{
+		m_InputEnabled = true;
+	}
+
+	void InputComponent::DisableInput()
+	{
+		m_InputEnabled = false;
 	}
 
 	void InputComponent::OnEvent(Event& event)
@@ -53,42 +85,45 @@ namespace Foundation
 
 		FD_PROFILE_FUNCTION();
 
-		EventDispatcher dispatcher(event);
-		dispatcher.Dispatch<KeyPressedEvent>(FD_BIND_EVENT_FN(InputComponent::OnKeyPressed));
-		dispatcher.Dispatch<MouseMovedEvent>(FD_BIND_EVENT_FN(InputComponent::OnMouseMoved));
-		dispatcher.Dispatch<MouseScrolledEvent>(FD_BIND_EVENT_FN(InputComponent::OnMouseScrolled));
-		dispatcher.Dispatch<MouseButtonPressedEvent>(FD_BIND_EVENT_FN(InputComponent::OnMouseButtonPressed));
+		if (m_InputEnabled)
+		{
+			EventDispatcher dispatcher(event);
+			dispatcher.Dispatch<KeyPressedEvent>(FD_BIND_EVENT_FN(InputComponent::OnKeyPressed));
+			dispatcher.Dispatch<MouseMovedEvent>(FD_BIND_EVENT_FN(InputComponent::OnMouseMoved));
+			dispatcher.Dispatch<MouseScrolledEvent>(FD_BIND_EVENT_FN(InputComponent::OnMouseScrolled));
+			dispatcher.Dispatch<MouseButtonPressedEvent>(FD_BIND_EVENT_FN(InputComponent::OnMouseButtonPressed));
+		}
 	}
 
 	bool InputComponent::OnKeyPressed(KeyPressedEvent& event)
 	{
-		for (const std::function<bool(KeyPressedEvent&)>& func : m_KeyPressedFunctions)
-			func(event);
+		for (const std::pair<BaseObject*, std::function<bool(KeyPressedEvent&)>> funcMap : m_KeyPressedFunctions)
+			funcMap.second(event);
 
 		return false;
 	}
 
 	bool InputComponent::OnMouseMoved(MouseMovedEvent& event)
 	{
-		for (const std::function<bool(MouseMovedEvent&)>& func : m_MouseMovedFunctions)
-			func(event);
+		for (const std::pair<BaseObject*, std::function<bool(MouseMovedEvent&)>> funcMap : m_MouseMovedFunctions)
+			funcMap.second(event);
 
 		return false;
 	}
 
 	bool InputComponent::OnMouseScrolled(MouseScrolledEvent& event)
 	{
-		for (const std::function<bool(MouseScrolledEvent&)>& func : m_MouseScrolledFunctions)
-			func(event);
+		for (const std::pair<BaseObject*, std::function<bool(MouseScrolledEvent&)>> funcMap : m_MouseScrolledFunctions)
+			funcMap.second(event);
 
 		return false;
 	}
 
 	bool InputComponent::OnMouseButtonPressed(MouseButtonPressedEvent& event)
 	{
-		for (const std::function<bool(MouseButtonPressedEvent&)>& func : m_MouseButtonFunctions)
-			func(event);
-
+		for (const std::pair<BaseObject*, std::function<bool(MouseButtonPressedEvent&)>> funcMap : m_MouseButtonFunctions)
+			funcMap.second(event);
+		
 		return false;
 	}
 }

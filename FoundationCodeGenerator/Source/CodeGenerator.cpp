@@ -1,5 +1,6 @@
 #include "CodeGenerator.h"
 #include <fstream>
+#include <functional>
 #include <sstream>
 
 #define USE_INTERMEDIATE_DIRECTORY 1
@@ -152,6 +153,17 @@ namespace Foundation
 					reflectedStringData.append("\t\tpObject->AddComponent<Foundation::" + className + ">();\n");
 				}
 
+				if (file.path().string().find("Object", 0) != std::string::npos
+					&& file.path().filename() != "BaseObject.h"
+					&& file.path().filename() != "Object.h")
+				{
+					// Add this object in the dummy scene.
+					reflectedStringData.insert(reflectedStringHeaderIncludeIndex, fileHeaderInclude + "\n");
+					reflectedStringData.append("\t\tFoundation::" + className + "* p" + className + " = new Foundation::" + className + "();\n");
+					reflectedStringData.append("\t\tdelete p" + className + ";\n");
+					reflectedStringData.append("\t\tp" + className + " = nullptr;\n");
+				}
+
 				generatedCode.append(precompiledHeaderInclude + "\n");
 				generatedCode.append(fileHeaderInclude + "\n");
 				generatedCode.append(reflectHeaderInclude + "\n");
@@ -160,64 +172,144 @@ namespace Foundation
 				generatedCode.append("{\n");
 				generatedCode.append("\tFD_REFLECT_BEGIN(" + className + ")\n");
 
-				std::string line;
-				std::ostringstream os;
-				int currentLine = 0;
-				bool foundMacro = false;
-				std::string macroLine = "";
 				bool foundReflectionMacro = false;
 
-				while (std::getline(ifStreamFile, line))
+				// Recursive function to populate children classes with their reflected parent properties.
+				std::function<void(std::ifstream& inputFile, std::string& reflectionStringToWriteTo, bool& bFoundReflectionMacro, bool beingCalledFromChildClass, const std::string& parentClassName)> readFileFunc = [this, &readFileFunc](std::ifstream& inputFile, std::string& reflectionStringToWriteTo, bool& bFoundReflectionMacro, bool beingCalledFromChildClass = false, std::string parentClassName = "")
 				{
-					currentLine++;
-
-					if (line.find(Generator::MACRO_REFLECT) != std::string::npos)
-						foundReflectionMacro = true;
-
-					// Only scan our header file if there is a reflection macro found
-					if (foundReflectionMacro)
+					if (!inputFile.is_open())
 					{
-						for (const std::string& macro : m_macros)
+						return;
+					}
+
+					std::ostringstream os;
+					bool foundMacro = false;
+					std::string macroLine = "";
+					bool foundParentClass = false;
+					std::string localParentClassName = "";
+					std::string parentClassHeaderFile = "";
+					std::vector<std::string> headerFiles;
+					const std::string& inheritingStringToLookFor = " : public ";
+					std::string line = "";
+
+					while (std::getline(inputFile, line))
+					{
+						if (line.find(".h\"") != std::string::npos)
+							headerFiles.push_back(line);
+
+						if (line.find(Generator::MACRO_REFLECT) != std::string::npos)
+							bFoundReflectionMacro = true;
+
+						if (line.find(inheritingStringToLookFor) != std::string::npos)
 						{
-							if (line.find(macro, 0) != std::string::npos)
+							size_t inheritingStringIndex = line.find(inheritingStringToLookFor, 0);
+							localParentClassName = line.substr(inheritingStringIndex + inheritingStringToLookFor.size(), line.size());
+							foundParentClass = true;
+						}
+
+						// Only scan our header file if there is a reflection macro found
+						if (bFoundReflectionMacro)
+						{
+							if (foundParentClass)
 							{
-								foundMacro = true;
-								macroLine = line;
-								break;
-							}
-							else
-							{
-								if (foundMacro)
+								std::cout << "Parent Class Name = " << localParentClassName << std::endl;
+
+								for (const std::string& headerFile : headerFiles)
 								{
-									if (macroLine.find(Generator::MACRO_VARIABLE) != std::string::npos)
+									if (headerFile.find(localParentClassName, 0) != std::string::npos)
 									{
-										if (macroLine.find(Generator::MACRO_VARIABLE_FLAG_EDIT) != std::string::npos)
+										const std::string& includeString = "#include \"";
+										const size_t includeStringIndex = includeString.size();
+										const size_t includeHeaderFilepathEnd = headerFile.find_last_of(".h") + 1;
+										const size_t includeHeaderFilepathCount = includeHeaderFilepathEnd - includeStringIndex;
+
+										std::string removeIncludeAndQuotes = headerFile.substr(includeStringIndex, includeHeaderFilepathCount);
+										
+										parentClassHeaderFile = removeIncludeAndQuotes;
+										break;
+									}
+								}
+
+								// If we have actually found a valid header file
+								if (parentClassHeaderFile != "")
+								{
+									// Then we need to read whatever reflected variables the parent has too.
+									for (const fs::path& dir : m_directories)
+									{
+										const fs::path& fullParentHeaderFilepath = fs::path(dir.string() + parentClassHeaderFile);
+										if (std::filesystem::exists(fullParentHeaderFilepath))
 										{
-											const size_t endOfVariable = line.find_last_of(";");
-											const size_t startOfVariable = line.find_last_of(" ") + 1;
-											const size_t variableNameLength = endOfVariable - startOfVariable;
-
-											std::string variableName = line.substr(startOfVariable, variableNameLength);
-											//std::cout << "Found variable called " << variableName << std::endl;
-
-											generatedCode.append("\tFD_REFLECT_MEMBER(" + variableName + ")\n");
+											parentClassHeaderFile = fullParentHeaderFilepath.string();
+											std::cout << "Code generator managed to find parent class file successfully" << parentClassHeaderFile << std::endl;
+											break;
 										}
 									}
-									foundMacro = false;
+
+									std::ifstream& parentFile = std::ifstream(parentClassHeaderFile);
+									if (parentFile.is_open())
+									{
+										readFileFunc(parentFile, reflectionStringToWriteTo, bFoundReflectionMacro, true, localParentClassName);
+									}
+									else
+									{
+										std::cout << "Code generator failed to find parent header file: " << parentClassHeaderFile << std::endl;
+									}
+								}
+
+								foundParentClass = false;
+							}
+
+							for (const std::string& macro : m_macros)
+							{
+								if (line.find(macro, 0) != std::string::npos)
+								{
+									foundMacro = true;
+									macroLine = line;
 									break;
+								}
+								else
+								{
+									if (foundMacro)
+									{
+										if (macroLine.find(Generator::MACRO_VARIABLE) != std::string::npos)
+										{
+											if (macroLine.find(Generator::MACRO_VARIABLE_FLAG_EDIT) != std::string::npos)
+											{
+												const size_t endOfVariable = line.find_last_of(";");
+												const size_t startOfVariable = line.find_last_of(" ") + 1;
+												const size_t variableNameLength = endOfVariable - startOfVariable;
+
+												std::string variableName = line.substr(startOfVariable, variableNameLength);
+												//std::cout << "Found variable called " << variableName << std::endl;
+												
+												bool isParentMember = beingCalledFromChildClass;
+												if (isParentMember)
+												{
+													reflectionStringToWriteTo.append("\tFD_REFLECT_PARENT_MEMBER(" + parentClassName + ", " + variableName + ")\n");
+												}
+												else
+												{
+													reflectionStringToWriteTo.append("\tFD_REFLECT_MEMBER(" + variableName + ")\n");
+												}
+											}
+										}
+										foundMacro = false;
+										break;
+									}
 								}
 							}
 						}
-					}
-				};
+					};
 
-				ifStreamFile.close();
+					inputFile.close();
+				};
+				readFileFunc(ifStreamFile, generatedCode, foundReflectionMacro, false, "");
+
+				generatedCode.append("\tFD_REFLECT_END()\n");
+				generatedCode.append("}\n");
 
 				if (foundReflectionMacro)
 				{
-					generatedCode.append("\tFD_REFLECT_END()\n");
-					generatedCode.append("}\n");
-					
 					std::ofstream ofStreamFile(generatedFilepath);
 					if (ofStreamFile.is_open())
 					{
@@ -229,8 +321,8 @@ namespace Foundation
 					}
 
 #if WRITE_TO_VCXPROJ_FILES
-						// Include these cpp files into the project (vcxproj)
-						std::cout << "Attempting to access " << vcxprojFile << std::endl;
+					// Include these cpp files into the project (vcxproj)
+					std::cout << "Attempting to access " << vcxprojFile << std::endl;
 					ifStreamFile = std::ifstream(vcxprojFile);
 					std::vector<std::string> vcxprojLines;
 					if (ifStreamFile.is_open())
@@ -318,9 +410,9 @@ namespace Foundation
 						ofStreamFile.close();
 					}
 #endif
-
-					foundReflectionMacro = false;
 				}
+
+				ifStreamFile.close();
 			};
 
 			// If we don't care about extensions.
@@ -342,4 +434,4 @@ namespace Foundation
 
 		return true;
 	}
-}
+};

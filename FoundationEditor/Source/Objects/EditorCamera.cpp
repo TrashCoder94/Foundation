@@ -21,17 +21,22 @@ namespace Foundation
 	EditorCamera::~EditorCamera()
 	{}
 
-	void EditorCamera::Start()
+	void EditorCamera::Create()
 	{
-		CameraObject::Start();
+		CameraObject::Create();
 
 		m_pCameraComponent->m_Primary = true;
 
 		m_pInputComponent = AddComponent<InputComponent>();
-		m_pInputComponent->BindInputFunction<KeyPressedEvent>(FD_BIND_EVENT_FN(EditorCamera::OnKeyPressed));
-		m_pInputComponent->BindInputFunction<MouseMovedEvent>(FD_BIND_EVENT_FN(EditorCamera::OnMouseMoved));
-		m_pInputComponent->BindInputFunction<MouseScrolledEvent>(FD_BIND_EVENT_FN(EditorCamera::OnMouseScrolled));
-		m_pInputComponent->BindInputFunction<MouseButtonPressedEvent>(FD_BIND_EVENT_FN(EditorCamera::OnMouseButtonPressed));
+		m_pInputComponent->BindInputFunction<KeyPressedEvent>(this, FD_BIND_EVENT_FN(EditorCamera::OnKeyPressed));
+		m_pInputComponent->BindInputFunction<MouseMovedEvent>(this, FD_BIND_EVENT_FN(EditorCamera::OnMouseMoved));
+		m_pInputComponent->BindInputFunction<MouseScrolledEvent>(this, FD_BIND_EVENT_FN(EditorCamera::OnMouseScrolled));
+		m_pInputComponent->BindInputFunction<MouseButtonPressedEvent>(this, FD_BIND_EVENT_FN(EditorCamera::OnMouseButtonPressed));
+	}
+
+	void EditorCamera::Start()
+	{
+		CameraObject::Start();
 	}
 
 	void EditorCamera::Update(float deltaTime)

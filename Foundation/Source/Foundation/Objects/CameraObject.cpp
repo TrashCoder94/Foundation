@@ -10,12 +10,16 @@ namespace Foundation
 	CameraObject::CameraObject() : Object(),
 		m_pCameraComponent(nullptr),
 		m_pTransformComponent(nullptr)
-	{}
+	{
+		m_pCameraComponent = AddComponent<CameraComponent>();
+	}
 
 	CameraObject::CameraObject(Scene* pScene) : Object(pScene),
 		m_pCameraComponent(nullptr),
 		m_pTransformComponent(nullptr)
-	{}
+	{
+		m_pCameraComponent = AddComponent<CameraComponent>();
+	}
 
 	CameraObject::~CameraObject()
 	{
@@ -23,12 +27,17 @@ namespace Foundation
 		m_pTransformComponent = nullptr;
 	}
 
+	void CameraObject::Create()
+	{
+		Object::Create();
+
+		m_pTransformComponent = GetComponent<TransformComponent>();
+		m_pCameraComponent = GetComponent<CameraComponent>();
+	}
+
 	void CameraObject::Start()
 	{
 		Object::Start();
-
-		m_pCameraComponent = AddComponent<CameraComponent>();
-		m_pTransformComponent = GetComponent<TransformComponent>();
 	}
 
 	void CameraObject::Update(float deltaTime)
@@ -53,7 +62,10 @@ namespace Foundation
 
 	void CameraObject::OnResize(float width, float height)
 	{
-		m_pCameraComponent->m_Camera.SetViewportSize((uint32_t)width, (uint32_t)height);
+		if (m_pCameraComponent)
+		{
+			m_pCameraComponent->m_Camera.SetViewportSize((uint32_t)width, (uint32_t)height);
+		}
 	}
 
 	bool CameraObject::OnWindowResized(WindowResizeEvent& event)

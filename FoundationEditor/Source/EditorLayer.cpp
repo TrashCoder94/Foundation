@@ -7,6 +7,7 @@
 
 #include <Foundation/Components/CameraComponent.h>
 #include <Foundation/Components/TransformComponent.h>
+#include <Foundation/Components/InputComponent.h>
 #include <Foundation/Scene/Scene.h>
 #include <Foundation/Scene/SceneSerializer.h>
 #include <Foundation/Utilities/PlatformUtilities.h>
@@ -381,7 +382,24 @@ namespace Foundation
 
 	void EditorLayer::OnEvent(Event& event)
 	{
-		m_pEditorScene->OnEvent(event);
+		switch (m_SceneState)
+		{
+			case SceneState::Edit:
+			{
+				m_pEditorScene->OnEvent(event);	
+				break;
+			}
+			case SceneState::Play:
+			{
+				m_pRuntimeScene->OnEvent(event);
+				break;
+			}
+			case SceneState::Pause:
+			{
+				m_pEditorScene->OnEvent(event);
+				break;
+			}
+		}
 
 		EventDispatcher eventDispatcher(event);
 		eventDispatcher.Dispatch<KeyPressedEvent>(FD_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
@@ -405,7 +423,7 @@ namespace Foundation
 		pIDComponent->m_UUID = {};
 		m_pEditorCamera->AddComponent<TransformComponent>(glm::vec3(0.0f));
 		m_pEditorCamera->SetOwner(m_pEditorScene.get());
-		m_pEditorCamera->Start();
+		m_pEditorCamera->Create();
 
 		CameraComponent* pCameraComponent = m_pEditorCamera->GetComponent<CameraComponent>();
 		SceneCamera& sceneCamera = pCameraComponent->m_Camera;
@@ -498,6 +516,8 @@ namespace Foundation
 			return;
 		}
 
+		m_CurrentSceneFilepath = "";
+
 		m_pEditorScene->End();
 		m_pEditorScene = CreateSharedPtr<Scene>();
 		m_pEditorScene->OnViewportResized((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
@@ -525,10 +545,13 @@ namespace Foundation
 			m_pEditorScene = CreateSharedPtr<Scene>();
 			//m_pEditorScene->Start();
 
+			// Store scene filepath.
+			m_CurrentSceneFilepath = *filepath;
+
 			// Open scene.
 			SceneSerializer serializer(m_pEditorScene);
-			serializer.Deserialize(*filepath);
-			m_pEditorScene->Start();
+			serializer.Deserialize(m_CurrentSceneFilepath);
+			m_pEditorScene->Create();
 			m_pEditorScene->OnViewportResized((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 			m_SceneHierarchyPanel.SetScene(m_pEditorScene);
 
@@ -547,7 +570,9 @@ namespace Foundation
 		std::optional<std::string> filepath = FileDialog::SaveFile("Foundation Scene (*.flevel)\0*.flevel\0");
 		if (filepath)
 		{
-			std::filesystem::path path{ *filepath };
+			m_CurrentSceneFilepath = *filepath;
+
+			std::filesystem::path path{ m_CurrentSceneFilepath };
 			const std::string& sceneName = path.stem().string();
 			m_pEditorScene->m_Name = sceneName;
 
@@ -558,11 +583,49 @@ namespace Foundation
 
 	void EditorLayer::OnScenePlay()
 	{
+		m_pEditorCamera->GetComponent<InputComponent>()->DisableInput();
+
+		// Automatically save the scene
+		SceneSerializer editorSerializer(m_pEditorScene);
+		editorSerializer.Serialize(m_CurrentSceneFilepath);
+
+		// So we can make sure the runtime scene uses all of the correct data from the editor
+		// when we deserialize.
 		m_SceneState = SceneState::Play;
 		m_pRuntimeScene = CreateSharedPtr<Scene>();
-		m_pRuntimeScene->Copy(m_pEditorScene);
+		SceneSerializer runtimeSerializer(m_pRuntimeScene);
+		runtimeSerializer.Deserialize(m_CurrentSceneFilepath);
+		m_pRuntimeScene->Create();
 		m_pRuntimeScene->Start();
+		m_pRuntimeScene->OnViewportResized((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 		m_SceneHierarchyPanel.SetScene(m_pRuntimeScene);
+
+		auto SetupRuntimeCamera = [this](CameraComponent* pCameraComponent)
+		{
+			if (!pCameraComponent)
+			{
+				return;
+			}
+
+			if (!pCameraComponent->m_Primary)
+			{
+				return;
+			}
+
+			if (BaseObject* pCameraOwner = pCameraComponent->GetOwner())
+			{
+				if (CameraObject* pCameraObject = static_cast<CameraObject*>(pCameraOwner))
+				{
+					SceneCamera& sceneCamera = pCameraComponent->m_Camera;
+					sceneCamera.SetProjectionType(SceneCamera::ProjectionType::Perspective);
+					sceneCamera.SetViewportSize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+
+					m_pRuntimeScene->SetCurrentCamera(pCameraObject);
+					return;
+				}
+			}
+		};
+		m_pRuntimeScene->IterateObjectsWithComponent<CameraComponent>(SetupRuntimeCamera);
 	}
 
 	void EditorLayer::OnSceneStop()
@@ -570,6 +633,9 @@ namespace Foundation
 		m_SceneState = SceneState::Edit;
 		m_SceneHierarchyPanel.SetScene(m_pEditorScene);
 		m_pRuntimeScene->End();
+		m_pRuntimeScene->Destroy();
 		m_pRuntimeScene = nullptr;
+		CreateEditorCamera();
+		m_pEditorCamera->GetComponent<InputComponent>()->EnableInput();
 	}
 }

@@ -750,15 +750,18 @@ namespace Foundation
 				}
 				case reflect::FieldType::Class:
 				{
-					if (BaseObject* pClass = ((BaseObject*)memberPtr))
+					if (void* pConstructedClassObject = reflect::ClassRegistry::Get().Construct(memberName))
 					{
-						pClass->SetOwner(pBaseObject);
-
-						const reflect::TypeDescriptor_Struct& classTypeDescriptor{ pClass->GetTypeDescription() };
-						const std::string& classTypeName{ classTypeDescriptor.getFullName() };
-						for (const reflect::TypeDescriptor_Struct::Member& classMember : classTypeDescriptor.members)
+						if (BaseObject* pClass = (BaseObject*)pConstructedClassObject)
 						{
-							deserializeMember(pClass, classMember, j);
+							pClass->SetOwner(pBaseObject);
+
+							const reflect::TypeDescriptor_Struct& classTypeDescriptor{ pClass->GetTypeDescription() };
+							const std::string& classTypeName{ classTypeDescriptor.getFullName() };
+							for (const reflect::TypeDescriptor_Struct::Member& classMember : classTypeDescriptor.members)
+							{
+								deserializeMember(pClass, classMember, j);
+							}
 						}
 					}
 					break;
@@ -902,13 +905,18 @@ namespace Foundation
 		for (json::const_iterator it = jsonObjectsArray.begin(); it != jsonObjectsArray.end(); ++it)
 		{
 			const std::string& objectName = it.key();
-			if (BaseObject* pBaseObject = scene.CreateObject(objectName))
+			if(void* pConstructedObject = reflect::ClassRegistry::Get().Construct(objectName))
 			{
-				const reflect::TypeDescriptor_Struct& typeDescriptor = pBaseObject->GetTypeDescription();
-
-				for (const reflect::TypeDescriptor_Struct::Member& member : typeDescriptor.members)
+				if (Object* pObject = (Object*)pConstructedObject)
 				{
-					deserializeMember(pBaseObject, member, j["Level"]["Objects"][objectName][member.name]);
+					const reflect::TypeDescriptor_Struct& typeDescriptor = pObject->GetTypeDescription();
+
+					for (const reflect::TypeDescriptor_Struct::Member& member : typeDescriptor.members)
+					{
+						deserializeMember(pObject, member, j["Level"]["Objects"][objectName][member.name]);
+					}
+
+					scene.AddObject(pObject, pObject->GetComponent<TagComponent>()->m_Tag);
 				}
 			}
 		}
@@ -943,14 +951,10 @@ namespace Foundation
 		json j;
 		levelFile >> j;
 
-		// TODO: Should we be creating the scene here?
-
-		// TODO: Cleanup level?
 		const std::string levelName = j["Level"]["Name"].get<std::string>();
 		m_pLevel->m_Name = levelName;
 		FD_CORE_LOG_TRACE("Deserializing  '{0}'", levelName);
 		
-		//SharedPtr<Scene> pJsonScene = CreateSharedPtr<Scene>();
 		*m_pLevel = j;
 
 		levelFile.close();

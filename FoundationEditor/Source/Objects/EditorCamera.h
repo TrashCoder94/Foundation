@@ -18,6 +18,7 @@ namespace Foundation
 		EditorCamera(Scene* pScene);
 		~EditorCamera();
 
+		virtual void Create() override;
 		virtual void Start() override;
 		virtual void Update(float deltaTime) override;
 		virtual void End() override;

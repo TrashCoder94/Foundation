@@ -2,7 +2,7 @@
 
 #include <Reflect.h>
 
-#include "BaseObject.h"
+#include "Foundation/Objects/BaseObject.h"
 #include "Foundation/Components/Component.h"
 #include "Foundation/Components/TagComponent.h"
 #include "Foundation/Core/UUID.h"
@@ -160,7 +160,8 @@ namespace Foundation
 			{ 
 				return !(*this == other);
 			}
-		private:
+
+		public:
 			FVARIABLE(VariableFlags::Edit)
 				float m_testFloat;
 			

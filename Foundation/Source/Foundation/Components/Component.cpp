@@ -1,5 +1,5 @@
 #include "fdpch.h"
-#include "Component.h"
+#include "Foundation/Components/Component.h"
 
 namespace Foundation
 {

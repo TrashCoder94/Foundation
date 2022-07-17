@@ -1,0 +1,82 @@
+{
+    "Level": {
+        "Name": "Untitled",
+        "Objects": {
+            "CameraObject": {
+                "m_testFloat": 10.0,
+                "m_pComponents": {
+                    "CameraComponent": {
+                        "m_Primary": true,
+                        "m_FixedAspectRatio": true
+                    },
+                    "IDComponent": {
+                        "m_UUID": -315177257
+                    },
+                    "TagComponent": {
+                        "m_Tag": "CameraObject"
+                    },
+                    "TransformComponent": {
+                        "m_Position": {
+                            "X": 0.0,
+                            "Y": 0.0,
+                            "Z": 0.0
+                        },
+                        "m_Rotation": {
+                            "X": 0.0,
+                            "Y": 0.0,
+                            "Z": 0.0
+                        },
+                        "m_Scale": {
+                            "X": 1.0,
+                            "Y": 1.0,
+                            "Z": 1.0
+                        }
+                    }
+                },
+                "m_testInt": 30
+            },
+            "PlayerObject": {
+                "m_testFloat": 10.0,
+                "m_pComponents": {
+                    "SpriteComponent": {
+                        "m_Colour": {
+                            "r": 0.0,
+                            "g": 0.0,
+                            "b": 1.0,
+                            "a": 1.0
+                        },
+                        "m_pTexture": null,
+                        "m_TilingFactor": 1.0
+                    },
+                    "IDComponent": {
+                        "m_UUID": -551428477
+                    },
+                    "TagComponent": {
+                        "m_Tag": "PlayerObject"
+                    },
+                    "TransformComponent": {
+                        "m_Position": {
+                            "X": 0.0,
+                            "Y": -2.0,
+                            "Z": -6.5
+                        },
+                        "m_Rotation": {
+                            "X": 0.0,
+                            "Y": 0.0,
+                            "Z": 0.0
+                        },
+                        "m_Scale": {
+                            "X": 1.0,
+                            "Y": 1.0,
+                            "Z": 1.0
+                        }
+                    },
+                    "InputComponent": {
+                        "m_UUID": 1042369668
+                    }
+                },
+                "m_testInt": 30
+            }
+        }
+    }
+}

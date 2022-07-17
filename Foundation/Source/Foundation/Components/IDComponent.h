@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Component.h"
+#include "Foundation/Components/Component.h"
 #include "Foundation/Core/UUID.h"
 
 namespace Foundation

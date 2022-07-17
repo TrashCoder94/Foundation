@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Component.h"
+#include "Foundation/Components/Component.h"
 #include "Foundation/Events/Event.h"
+#include "Foundation/Core/UUID.h"
 
 namespace Foundation
 {
@@ -24,9 +25,15 @@ namespace Foundation
 		~InputComponent();
 
 		template<typename T>
-		bool BindInputFunction(InputEventFunc<T> func);
+		bool BindInputFunction(BaseObject* pFunctionOwner, InputEventFunc<T> func);
+
+		void EnableInput();
+		void DisableInput();
 
 		virtual void OnEvent(Event& event) override;
+
+		FVARIABLE(VariableFlags::Edit)
+			UUID m_UUID;
 
 	private:
 		bool OnKeyPressed(KeyPressedEvent& event);
@@ -34,9 +41,11 @@ namespace Foundation
 		bool OnMouseScrolled(MouseScrolledEvent& event);
 		bool OnMouseButtonPressed(MouseButtonPressedEvent& event);
 
-		std::vector<std::function<bool(KeyPressedEvent&)>>			m_KeyPressedFunctions;
-		std::vector<std::function<bool(MouseMovedEvent&)>>			m_MouseMovedFunctions;
-		std::vector<std::function<bool(MouseScrolledEvent&)>>		m_MouseScrolledFunctions;
-		std::vector<std::function<bool(MouseButtonPressedEvent&)>>	m_MouseButtonFunctions;
+		std::map<BaseObject*, std::function<bool(KeyPressedEvent&)>>			m_KeyPressedFunctions;
+		std::map<BaseObject*, std::function<bool(MouseMovedEvent&)>>			m_MouseMovedFunctions;
+		std::map<BaseObject*, std::function<bool(MouseScrolledEvent&)>>			m_MouseScrolledFunctions;
+		std::map<BaseObject*, std::function<bool(MouseButtonPressedEvent&)>>	m_MouseButtonFunctions;
+
+		bool m_InputEnabled;
 	};
 }

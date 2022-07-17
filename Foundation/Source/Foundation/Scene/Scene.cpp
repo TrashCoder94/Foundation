@@ -43,6 +43,22 @@ namespace Foundation
 		m_pObjectMap.clear();*/
 	}
 
+	void Scene::Create()
+	{
+		BaseObject::Create();
+
+		FD_PROFILE_FUNCTION();
+
+		if (m_pCurrentCameraObject)
+			m_pCurrentCameraObject->Create();
+
+		auto func = [](Object* pObject)
+		{
+			pObject->Create();
+		};
+		IterateObjects(func);
+	}
+
 	void Scene::Start()
 	{
 		BaseObject::Start();
@@ -80,12 +96,28 @@ namespace Foundation
 		if (m_pCurrentCameraObject)
 		{
 			m_pCurrentCameraObject->End();
-			m_pCurrentCameraObject = nullptr;
 		}
 
 		auto func = [](Object* pObject)
 		{
 			pObject->End();
+		};
+		IterateObjects(func);
+	}
+
+	void Scene::Destroy()
+	{
+		BaseObject::Destroy();
+
+		if (m_pCurrentCameraObject)
+		{
+			m_pCurrentCameraObject->Destroy();
+			m_pCurrentCameraObject = nullptr;
+		}
+
+		auto func = [](Object* pObject)
+		{
+			pObject->Destroy();
 		};
 		IterateObjects(func);
 	}
@@ -99,13 +131,43 @@ namespace Foundation
 
 		pObject->AddComponent<TagComponent>(name);
 		pObject->AddComponent<TransformComponent>(glm::vec3(0.0f));
-		//pObject->AddComponent<ModelComponent>();
 		pObject->SetOwner(this);
-		pObject->Start();
+		pObject->Create();
 
 		m_pObjects.push_back(pObject);
 
 		return pObject;
+	}
+
+	void Scene::AddObject(Object* pObject, const std::string& name /*= "Object"*/)
+	{
+		if (!pObject)
+		{
+			FD_CORE_LOG_ERROR("Scene {0} couldn't add object because it was null", m_Name);
+			return;
+		}
+
+		if (!pObject->HasComponent<IDComponent>())
+		{
+			IDComponent* pIDComponent = pObject->AddComponent<IDComponent>();
+			pIDComponent->m_UUID = {};
+		}
+		if (!pObject->HasComponent<TagComponent>())
+		{
+			pObject->AddComponent<TagComponent>(name);
+		}
+		else
+		{
+			pObject->GetComponent<TagComponent>()->m_Tag = name;
+		}
+		if (!pObject->HasComponent<TransformComponent>())
+		{
+			pObject->AddComponent<TransformComponent>(glm::vec3(0.0f));
+		}
+		pObject->SetOwner(this);
+		pObject->Create();
+
+		m_pObjects.push_back(pObject);
 	}
 	
 	const std::vector<Object*>& Scene::GetObjects() const
@@ -127,9 +189,8 @@ namespace Foundation
 
 		pObject->AddComponent<TagComponent>(name);
 		pObject->AddComponent<TransformComponent>(glm::vec3(0.0f));
-		pObject->AddComponent<ModelComponent>();
 		pObject->SetOwner(this);
-		pObject->Start();
+		pObject->Create();
 
 		m_pObjects.push_back(pObject);
 
@@ -138,7 +199,25 @@ namespace Foundation
 
 	void Scene::DestroyObject(Object* pObject)
 	{
-		for (size_t iO = m_pObjects.size(); iO > 0; --iO)
+		for (std::vector<Object*>::iterator it = m_pObjects.begin(); it != m_pObjects.end(); ++it)
+		{
+			Object* pSceneObject = (*it);
+
+			if (!pSceneObject)
+				continue;
+
+			if (pObject == pSceneObject)
+			{
+				pSceneObject->End();
+				delete pSceneObject;
+				pSceneObject = nullptr;
+
+				m_pObjects.erase(it);
+				break;
+			}
+		}
+
+		/*for (size_t iO = m_pObjects.size(); iO > 0; --iO)
 		{
 			Object* pSceneObject = m_pObjects[iO];
 			if (!pSceneObject)
@@ -153,7 +232,7 @@ namespace Foundation
 				m_pObjects.erase(m_pObjects.begin() + iO);
 				break;
 			}
-		}
+		}*/
 	}
 
 	void Scene::Render()
@@ -248,18 +327,20 @@ namespace Foundation
 		m_ID = pScene->m_ID;
 		m_Name = pScene->m_Name;
 
-		auto func = [this](IDComponent* pSourceIDComponent)
+		const std::vector<Object*>& pSceneObjects = pScene->m_pObjects;
+		for (Object* pObject : pSceneObjects)
 		{
-			UUID uuid = pSourceIDComponent->m_UUID;
-			Object* pObject = CreateObjectWithID(uuid, "");
-			m_pObjectMap[uuid] = pObject;
-		};
-		pScene->IterateObjectsWithComponent<IDComponent>(func);
+			if (!pObject)
+			{
+				continue;
+			}
 
-		CopyComponents<TagComponent>(pScene->m_pObjects, m_pObjects);
-		CopyComponents<TransformComponent>(pScene->m_pObjects, m_pObjects);
-		CopyComponents<SpriteComponent>(pScene->m_pObjects, m_pObjects);
-		CopyComponents<CameraComponent>(pScene->m_pObjects, m_pObjects);
+			if (Object* pNewObject = new Object())
+			{
+				pNewObject->Copy(pObject);
+				AddObject(pNewObject);
+			}
+		}
 	}
 
 	void Scene::IterateObjects(std::function<void(Object*)> function)

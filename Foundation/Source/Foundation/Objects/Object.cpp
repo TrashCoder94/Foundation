@@ -1,5 +1,5 @@
 #include "fdpch.h"
-#include "Object.h"
+#include "Foundation/Objects/Object.h"
 #include "Foundation/Components/IDComponent.h"
 #include "Foundation/Scene/Scene.h"
 

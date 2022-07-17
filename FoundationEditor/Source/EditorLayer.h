@@ -55,6 +55,7 @@ namespace Foundation
 			Object* m_pMainCameraObject;
 			Object* m_pSecondCameraObject;
 			int m_GizmoType;
+			std::string m_CurrentSceneFilepath;
 
 			bool m_PrimaryCamera;
 

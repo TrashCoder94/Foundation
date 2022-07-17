@@ -9,7 +9,7 @@
 #include <glm/gtx/quaternion.hpp>
 #pragma warning(pop)
 
-#include "Component.h"
+#include "Foundation/Components/Component.h"
 
 namespace Foundation
 {

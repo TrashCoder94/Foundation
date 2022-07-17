@@ -24,13 +24,16 @@ namespace Foundation
 			Scene(const std::string& name = "Untitled");
 			~Scene();
 
+			virtual void Create() override;
 			virtual void Start() override;
 			virtual void Update(float deltaTime) override;
 			virtual void End() override;
+			virtual void Destroy() override;
 			void Render();
 
 			Object* CreateObject(const std::string& name = "Object");
-			
+			void AddObject(Object* pObject, const std::string& name = "Object");
+
 			template<class T>
 			T* CreateObject(const std::string& name = "Object")
 			{

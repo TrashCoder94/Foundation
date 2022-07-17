@@ -116,6 +116,7 @@ struct TypeDescriptor_Struct : TypeDescriptor {
     struct Member {
         const char* name;
         size_t offset;
+		size_t size;
         TypeDescriptor* type;
     };
 
@@ -153,7 +154,7 @@ struct TypeDescriptor_Struct : TypeDescriptor {
         typeDesc->members = {
 
 #define REFLECT_STRUCT_MEMBER(name) \
-            {#name, offsetof(T, name), reflect::TypeResolver<decltype(T::name)>::get()},
+            {#name, offsetof(T, name), sizeof(name), reflect::TypeResolver<decltype(T::name)>::get()},
 
 #define REFLECT_STRUCT_END() \
         }; \
@@ -219,7 +220,9 @@ private:
         typeDesc->members = {
 
 #define FD_REFLECT_CLASS_MEMBER(name) \
-            {#name, offsetof(T, name), reflect::TypeResolver<decltype(T::name)>::get()},
+            {#name, offsetof(T, name), sizeof(name), reflect::TypeResolver<decltype(T::name)>::get()},
+#define FD_REFLECT_PARENT_CLASS_MEMBER(parentType, name) \
+            {#name, offsetof(parentType, name), sizeof(name), reflect::TypeResolver<decltype(parentType::name)>::get()},
 
 #define FD_REFLECT_CLASS_END() \
         }; \
@@ -234,6 +237,7 @@ private:
 	}\
 	FD_REFLECT_CLASS_BEGIN(type)
 #define FD_REFLECT_MEMBER(name) FD_REFLECT_CLASS_MEMBER(name)
+#define FD_REFLECT_PARENT_MEMBER(type, name) FD_REFLECT_PARENT_CLASS_MEMBER(type, name)
 #define FD_REFLECT_END() FD_REFLECT_CLASS_END()
 
 enum class VariableFlags

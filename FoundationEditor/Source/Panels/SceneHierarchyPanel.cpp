@@ -54,6 +54,44 @@ namespace Foundation
 	{
 		ImGui::Begin("Scene Hierarchy");
 		{
+			ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(0, 128, 0, 255));
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, IM_COL32(0, 100, 0, 255));
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, IM_COL32(0, 100, 0, 255));
+			if (ImGui::Button("Add Object"))
+			{
+				ImGui::OpenPopup("AddObject");
+			}
+			ImGui::PopStyleColor(3);
+
+			ImGui::Separator();
+
+			if (ImGui::BeginPopup("AddObject"))
+			{
+				const reflect::RegisteredClassMap& classMap = reflect::ClassRegistry::Get().GetClassMap();
+				for (const std::pair<std::string, reflect::Constructor_T>& classData : classMap)
+				{
+					const std::string& className = classData.first;
+
+					if (className.find("Object") != std::string::npos)
+					{
+						if (ImGui::MenuItem(className.c_str()))
+						{
+							if (void* pConstructedObject = reflect::ClassRegistry::Get().Construct(className))
+							{
+								if (Object* pNewObject = static_cast<Object*>(pConstructedObject))
+								{
+									m_pScene->AddObject(pNewObject, className);
+									m_pSelectedObject = pNewObject;
+									ImGui::CloseCurrentPopup();
+								}
+							}
+						}
+					}
+				}
+
+				ImGui::EndPopup();
+			}
+
 			auto func = [this](Object* pObject)
 			{
 				DrawObjectNode(pObject);
@@ -65,15 +103,42 @@ namespace Foundation
 				m_pSelectedObject = {};
 			}
 
-			// Right-click on a blank space.
-			if (ImGui::BeginPopupContextWindow(0, 1, false))
-			{
-				if (ImGui::MenuItem("Create New Object"))
-				{
-					m_pSelectedObject = m_pScene->CreateObject("New Object");
-				}
-				ImGui::EndPopup();
-			}
+			//// Right-click on a blank space.
+			//if (ImGui::BeginPopupContextWindow(0, 1, false))
+			//{
+			//	if (ImGui::MenuItem("Create New Object"))
+			//	{
+			//		/*const reflect::RegisteredClassMap& classMap = reflect::ClassRegistry::Get().GetClassMap();
+			//		for (const std::pair<std::string, reflect::Constructor_T>& classData : classMap)
+			//		{
+			//			const std::string& className = classData.first;
+
+			//			if (className.find("Object") != std::string::npos)
+			//			{
+			//				if (ImGui::MenuItem(className.c_str()))
+			//				{
+			//					if (void* pConstructedComponent = reflect::ClassRegistry::Get().Construct(className))
+			//					{
+			//						if (Component* pNewComponent = static_cast<Component*>(pConstructedComponent))
+			//						{
+			//							if (pObject->HasComponent(pNewComponent))
+			//							{
+			//								FD_CORE_LOG_WARN("Object '{0}' already has a {1} so this component won't be added", pObject->GetComponent<TagComponent>()->m_Tag, className);
+			//							}
+			//							else
+			//							{
+			//								pObject->AddComponent(pNewComponent);
+			//							}
+			//							ImGui::CloseCurrentPopup();
+			//						}
+			//					}
+			//				}
+			//			}
+			//		}*/
+			//		m_pSelectedObject = m_pScene->CreateObject("New Object");
+			//	}
+			//	ImGui::EndPopup();
+			//}
 		}
 		ImGui::End();
 

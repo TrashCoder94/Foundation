@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "Component.h"
+#include "Foundation/Components/Component.h"
 
 namespace Foundation
 {

@@ -49,6 +49,9 @@
     <Filter Include="Source\Foundation\Scene">
       <UniqueIdentifier>{F9B7799D-65EF-C134-6EF9-2558DAAFE82D}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Foundation\SpaceInvadersTest">
+      <UniqueIdentifier>{9370F641-FF29-61EC-8889-7BC6F441175C}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source\Foundation\Utilities">
       <UniqueIdentifier>{477D377C-B38A-6562-3C71-614DA87D3119}</UniqueIdentifier>
     </Filter>
@@ -269,6 +272,9 @@
     </ClInclude>
     <ClInclude Include="Source\Foundation\Scene\SceneSerializer.h">
       <Filter>Source\Foundation\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Foundation\SpaceInvadersTest\PlayerObject.h">
+      <Filter>Source\Foundation\SpaceInvadersTest</Filter>
     </ClInclude>
     <ClInclude Include="Source\Foundation\Utilities\PlatformUtilities.h">
       <Filter>Source\Foundation\Utilities</Filter>
@@ -1541,6 +1547,9 @@
     <ClCompile Include="..\Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation\CameraComponent_gen.cpp">
       <Filter>Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation</Filter>
     </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation\CameraObject_gen.cpp">
+      <Filter>Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation</Filter>
+    </ClCompile>
     <ClCompile Include="..\Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation\Component_gen.cpp">
       <Filter>Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation</Filter>
     </ClCompile>
@@ -1554,6 +1563,9 @@
       <Filter>Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation</Filter>
     </ClCompile>
     <ClCompile Include="..\Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation\Object_gen.cpp">
+      <Filter>Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation\PlayerObject_gen.cpp">
       <Filter>Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation</Filter>
     </ClCompile>
     <ClCompile Include="..\Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation\ReflectionData_gen.cpp">
@@ -1634,6 +1646,9 @@
     <ClCompile Include="Source\Foundation\Network\Server.cpp">
       <Filter>Source\Foundation\Network</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Foundation\Objects\BaseObject.cpp">
+      <Filter>Source\Foundation\Objects</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Foundation\Objects\CameraObject.cpp">
       <Filter>Source\Foundation\Objects</Filter>
     </ClCompile>
@@ -1696,6 +1711,9 @@
     </ClCompile>
     <ClCompile Include="Source\Foundation\Scene\SceneSerializer.cpp">
       <Filter>Source\Foundation\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Foundation\SpaceInvadersTest\PlayerObject.cpp">
+      <Filter>Source\Foundation\SpaceInvadersTest</Filter>
     </ClCompile>
     <ClCompile Include="Source\Platform\OpenGL\OpenGLBuffer.cpp">
       <Filter>Source\Platform\OpenGL</Filter>

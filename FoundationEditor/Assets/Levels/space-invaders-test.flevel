@@ -10,7 +10,7 @@
                         "m_FixedAspectRatio": true
                     },
                     "IDComponent": {
-                        "m_UUID": 627726127
+                        "m_UUID": 237967657
                     },
                     "TagComponent": {
                         "m_Tag": "CameraObject"
@@ -39,7 +39,7 @@
                 "m_testFloat": 10.0,
                 "m_pComponents": {
                     "InputComponent": {
-                        "m_UUID": -1902495927
+                        "m_UUID": 917033055
                     },
                     "SpriteComponent": {
                         "m_Colour": {
@@ -54,7 +54,7 @@
                         "m_TilingFactor": 1.0
                     },
                     "IDComponent": {
-                        "m_UUID": 420769908
+                        "m_UUID": -1004435934
                     },
                     "TagComponent": {
                         "m_Tag": "PlayerObject"
@@ -82,7 +82,14 @@
                 "m_BulletSize": {
                     "X": 0.25,
                     "Y": 0.5,
-                    "Z": 0.5
+                    "Z": 1.0
+                },
+                "m_SpriteFrameDuration": 0.25,
+                "m_pPlayerSprite1": {
+                    "m_Filepath": "C:\\SideProjects\\Repositories\\Foundation\\FoundationEditor\\Assets\\Textures\\Tray.png"
+                },
+                "m_pPlayerSprite2": {
+                    "m_Filepath": "C:\\SideProjects\\Repositories\\Foundation\\FoundationEditor\\Assets\\Textures\\Tray2.png"
                 }
             }
         }

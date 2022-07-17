@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Foundation/Objects/Object.h"
+#include "Foundation/Renderer/Texture.h"
 
 #include <glm/glm.hpp>
 
@@ -33,6 +34,15 @@ namespace Foundation
 		FVARIABLE(VariableFlags::Edit)
 			glm::vec3 m_BulletSize;
 
+		FVARIABLE(VariableFlags::Edit)
+			float m_SpriteFrameDuration;
+
+		FVARIABLE(VariableFlags::Edit)
+			SharedPtr<Texture2D> m_pPlayerSprite1;
+
+		FVARIABLE(VariableFlags::Edit)
+			SharedPtr<Texture2D> m_pPlayerSprite2;
+
 	private:
 		bool OnKeyPressed(KeyPressedEvent& event);
 		bool OnKeyReleased(KeyReleasedEvent& event);
@@ -43,5 +53,8 @@ namespace Foundation
 		TransformComponent* m_pTransformComponent;
 		InputComponent* m_pInputComponent;
 		SpriteComponent* m_pSpriteComponent;
+
+		float m_CurrentAnimationFrame;
+		bool m_ShouldResetToSprite1OnNextFrame;
 	};
 }

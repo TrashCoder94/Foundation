@@ -12,14 +12,19 @@ namespace Foundation
 	PlayerObject::PlayerObject() : Object(),
 		m_BulletSpeed(1.0f),
 		m_BulletSize(glm::vec3(1.0f)),
+		m_SpriteFrameDuration(0.5f),
+		m_pPlayerSprite1(nullptr),
+		m_pPlayerSprite2(nullptr),
 		m_pBullets(),
 		m_pTransformComponent(nullptr),
 		m_pInputComponent(nullptr),
-		m_pSpriteComponent(nullptr)
+		m_pSpriteComponent(nullptr),
+		m_CurrentAnimationFrame(0.0f),
+		m_ShouldResetToSprite1OnNextFrame(false)
 	{
 		AddComponent<InputComponent>();
 		
-		const Colour playerColour = Colour(glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
+		const Colour playerColour = Colour(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 		m_pSpriteComponent = AddComponent<SpriteComponent>(playerColour);
 	}
 
@@ -37,6 +42,7 @@ namespace Foundation
 
 		m_pTransformComponent = GetComponent<TransformComponent>();
 		m_pInputComponent = GetComponent<InputComponent>();
+		m_pSpriteComponent = GetComponent<SpriteComponent>();
 
 		if (m_pInputComponent)
 		{
@@ -67,11 +73,27 @@ namespace Foundation
 				pScene->AddObject(pBullet, pBullet->GetComponent<TagComponent>()->m_Tag);
 			}
 		}
+
+		m_pSpriteComponent->m_pTexture = m_pPlayerSprite1;
 	}
 
 	void PlayerObject::Update(float deltaTime)
 	{
 		Object::Update(deltaTime);
+
+		if (m_ShouldResetToSprite1OnNextFrame)
+		{
+			m_CurrentAnimationFrame += deltaTime;
+			if (m_CurrentAnimationFrame >= m_SpriteFrameDuration)
+			{
+				if (m_pSpriteComponent)
+				{
+					m_pSpriteComponent->m_pTexture = m_pPlayerSprite1;
+					m_ShouldResetToSprite1OnNextFrame = false;
+					m_CurrentAnimationFrame = 0.0f;
+				}
+			}
+		}
 
 		for (std::vector<BulletObject*>::iterator it = m_pBullets.begin(); it != m_pBullets.end(); ++it)
 		{
@@ -129,14 +151,26 @@ namespace Foundation
 	bool PlayerObject::OnKeyPressed(KeyPressedEvent& event)
 	{
 		if (event.GetKeyCode() == Key::Up || event.GetKeyCode() == Key::W)
+		{
 			m_pTransformComponent->m_Position.z -= 0.5f;
+		}
 		else if (event.GetKeyCode() == Key::Down || event.GetKeyCode() == Key::S)
+		{
 			m_pTransformComponent->m_Position.z += 0.5f;
+		}
 
 		if (event.GetKeyCode() == Key::Left || event.GetKeyCode() == Key::A)
+		{
 			m_pTransformComponent->m_Position.x -= 0.5f;
+			m_pSpriteComponent->m_pTexture = m_pPlayerSprite2;
+			m_ShouldResetToSprite1OnNextFrame = true;
+		}
 		else if (event.GetKeyCode() == Key::Right || event.GetKeyCode() == Key::D)
+		{
 			m_pTransformComponent->m_Position.x += 0.5f;
+			m_pSpriteComponent->m_pTexture = m_pPlayerSprite2;
+			m_ShouldResetToSprite1OnNextFrame = true;
+		}
 
 		if (event.GetKeyCode() == Key::Space)
 		{

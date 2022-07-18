@@ -1,11 +1,11 @@
 #include "fdpch.h"
-#include "Foundation/SpaceInvadersTest/BulletObject.h"
 #include "Foundation/SpaceInvadersTest/EnemyManagerObject.h"
-#include "Foundation/SpaceInvadersTest/EnemyObject.h"
-#include "Foundation/SpaceInvadersTest/PlayerObject.h"
 #include "Foundation/Components/TagComponent.h"
 #include "Foundation/Components/TransformComponent.h"
 #include "Foundation/Scene/Scene.h"
+#include "Foundation/SpaceInvadersTest/BulletObject.h"
+#include "Foundation/SpaceInvadersTest/EnemyObject.h"
+#include "Foundation/SpaceInvadersTest/PlayerObject.h"
 
 #include <imgui.h>
 
@@ -18,10 +18,12 @@ namespace Foundation
 	{}
 
 	EnemyManagerObject::EnemyManagerObject() : Object(),
-		m_StartingPosition(glm::vec3(0.0f)),
-		m_Spacing(glm::vec2(0.5f)),
+		m_StartingPosition(glm::vec3(-1.75f, 2.0f, -7.0f)),
+		m_Spacing(glm::vec2(1.25f, 1.25f)),
 		m_NumberOfEnemiesPerRow(4),
 		m_NumberOfRows(3),
+		m_EnemyDeathParticleProperties(),
+		m_NumberOfParticlesToEmitPerDeath(5),
 		m_EnemyRows(),
 		m_pPlayerObject(nullptr),
 		m_SpawnPreview(false)
@@ -210,6 +212,14 @@ namespace Foundation
 
 		if (Scene* pScene = GetScene())
 		{
+			m_EnemyDeathParticleProperties.m_Position = enemyRowData.m_pEnemyObject->GetComponent<TransformComponent>()->m_Position;
+			m_EnemyDeathParticleProperties.m_Rotation = 0.0f;
+
+			for (int iP = 0; iP < m_NumberOfParticlesToEmitPerDeath; ++iP)
+			{
+				pScene->GetParticleSystem().Emit(m_EnemyDeathParticleProperties);
+			}
+
 			enemyRowData.m_IsDead = true;
 
 			pScene->RemoveObject(enemyRowData.m_pEnemyObject);

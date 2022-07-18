@@ -7,6 +7,7 @@
 #include "Foundation/Renderer/Model.h"
 #include "Foundation/Renderer/Texture.h"
 #include "Foundation/SpaceInvadersTest/BulletObject.h"
+#include "Foundation/Particles/ParticleSystem.h"
 #include <glm/glm.hpp>
 
 namespace reflect {
@@ -212,6 +213,25 @@ namespace reflect {
 	template <>
 	TypeDescriptor* getPrimitiveDescriptor<Foundation::BulletObject*>() {
 		static TypeDescriptor_BulletObjectPointer typeDesc;
+		return &typeDesc;
+	}
+
+	//--------------------------------------------------------
+	// A type descriptor for ParticleProperties
+	//--------------------------------------------------------
+
+	struct TypeDescriptor_ParticleProperties : TypeDescriptor {
+		TypeDescriptor_ParticleProperties() : TypeDescriptor{ "ParticleProperties", sizeof(Foundation::ParticleProperties), FieldType::ParticleProperties } {
+		}
+		virtual void dump(const void* obj, int /* unused */) const override {
+			const Foundation::ParticleProperties* pParticleSystem = (const Foundation::ParticleProperties*)obj;
+			std::cout << "ParticleProperties{" << "}";
+		}
+	};
+
+	template <>
+	TypeDescriptor* getPrimitiveDescriptor<Foundation::ParticleProperties>() {
+		static TypeDescriptor_ParticleProperties typeDesc;
 		return &typeDesc;
 	}
 }

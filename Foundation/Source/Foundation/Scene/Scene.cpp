@@ -23,7 +23,8 @@ namespace Foundation
 		m_CurrentCameraTransform(glm::mat4(1.0f)),
 		m_ViewportWidth(0),
 		m_ViewportHeight(0),
-		m_Running(false)
+		m_Running(false),
+		m_ParticleSystem(1000)
 	{
 	}
 
@@ -79,6 +80,8 @@ namespace Foundation
 			pObject->Update(deltaTime);
 		};
 		IterateObjects(func);
+
+		m_ParticleSystem.OnUpdate(deltaTime);
 	}
 
 	void Scene::End()
@@ -206,6 +209,11 @@ namespace Foundation
 		return m_pObjects;
 	}
 
+	ParticleSystem& Scene::GetParticleSystem()
+	{
+		return m_ParticleSystem;
+	}
+
 	Object* Scene::CreateObjectWithID(UUID id, const std::string& name)
 	{
 		Object* pObject = new Object();
@@ -255,6 +263,8 @@ namespace Foundation
 
 		if (m_pCurrentCamera)
 		{
+			m_ParticleSystem.OnRender(*m_pCurrentCamera, m_CurrentCameraTransform);
+
 			Renderer2D::BeginScene(*m_pCurrentCamera, m_CurrentCameraTransform);
 			{
 				// Sprites

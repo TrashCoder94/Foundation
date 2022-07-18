@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Foundation/Objects/Object.h"
+#include "Foundation/Particles/ParticleSystem.h"
 
 namespace Foundation
 {
@@ -43,6 +44,12 @@ namespace Foundation
 
 		FVARIABLE(VariableFlags::Edit)
 			int m_NumberOfRows;
+
+		FVARIABLE(VariableFlags::Edit)
+			ParticleProperties m_EnemyDeathParticleProperties;
+
+		FVARIABLE(VariableFlags::Edit)
+			int m_NumberOfParticlesToEmitPerDeath;
 
 	private:
 		void CreateEnemies();

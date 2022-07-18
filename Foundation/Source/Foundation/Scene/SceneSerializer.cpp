@@ -10,6 +10,7 @@
 #include "Foundation/Components/TagComponent.h"
 #include "Foundation/Components/TransformComponent.h"
 #include "Foundation/Objects/Object.h"
+#include "Foundation/Particles/ParticleSystem.h"
 #include "Foundation/Renderer/Texture.h"
 #include "Foundation/Renderer/Model.h"
 #include "Reflect.h"
@@ -329,6 +330,25 @@ namespace Foundation
 		}
 	}
 
+	void to_json(json& j, const ParticleProperties& particleProperties)
+	{
+		j.emplace("m_VelocityVariation", particleProperties.m_VelocityVariation);
+		j.emplace("m_ColourBegin", particleProperties.m_ColourBegin);
+		j.emplace("m_ColourEnd", particleProperties.m_ColourEnd);
+		j.emplace("m_SizeBegin", particleProperties.m_SizeBegin);
+		j.emplace("m_SizeEnd", particleProperties.m_SizeEnd);
+		j.emplace("m_SizeVariation", particleProperties.m_SizeVariation);
+		j.emplace("m_LifeTime", particleProperties.m_LifeTime);
+	}
+
+	void to_json(json& j, const std::vector<ParticleProperties>& particleProperties)
+	{
+		for (const ParticleProperties& pp : particleProperties)
+		{
+			j.push_back(pp);
+		}
+	}
+
 	void to_json(json& j, const Scene& scene)
 	{
 		j = json{};
@@ -439,6 +459,12 @@ namespace Foundation
 					{
 						j = pSharedModel;
 					}
+					break;
+				}
+				case reflect::FieldType::ParticleProperties:
+				{
+					ParticleProperties particlePropertyValue = *(ParticleProperties*)memberPtr;
+					j = particlePropertyValue;
 					break;
 				}
 				case reflect::FieldType::Class:
@@ -554,6 +580,12 @@ namespace Foundation
 							j = modelVec;
 							break;
 						}
+						case reflect::FieldType::ParticleProperties:
+						{
+							std::vector<ParticleProperties> particlePropertiesVec = *(std::vector<ParticleProperties>*)memberPtr;
+							j = particlePropertiesVec;
+							break;
+						}
 						case reflect::FieldType::Class:
 						{
 							std::vector<BaseObject*> classVector = *(std::vector<BaseObject*>*)memberPtr;
@@ -657,6 +689,25 @@ namespace Foundation
 		}
 	}
 
+	void from_json(const json& j, ParticleProperties& pp)
+	{
+		pp.m_VelocityVariation = j.at("m_VelocityVariation").get<glm::vec3>();
+		pp.m_ColourBegin = j.at("m_ColourBegin").get<glm::vec4>();
+		pp.m_ColourEnd = j.at("m_ColourEnd").get<glm::vec4>();
+		pp.m_SizeBegin = j.at("m_SizeBegin").get<glm::vec2>();
+		pp.m_SizeEnd = j.at("m_SizeEnd").get<glm::vec2>();
+		pp.m_SizeVariation = j.at("m_SizeVariation").get<glm::vec2>();
+		pp.m_LifeTime = j.at("m_LifeTime").get<float>();
+	}
+
+	void from_json(const json& j, std::vector<ParticleProperties>& ppVec)
+	{
+		for (size_t i = 0; i < j.size(); ++i)
+		{
+			ppVec.push_back(j[i]);
+		}
+	}
+
 	void from_json(const json& j, Scene& scene)
 	{
 		std::function<void(BaseObject* pBaseObject, const reflect::TypeDescriptor_Struct::Member& member, const json& j)> deserializeMember = [&](BaseObject* pBaseObject, const reflect::TypeDescriptor_Struct::Member& member, const json& j)
@@ -746,6 +797,11 @@ namespace Foundation
 					{
 						*(SharedPtr<Model>*)memberPtr = j.get<SharedPtr<Model>>();
 					}
+					break;
+				}
+				case reflect::FieldType::ParticleProperties:
+				{
+					*(ParticleProperties*)memberPtr = j.get<ParticleProperties>();
 					break;
 				}
 				case reflect::FieldType::Class:
@@ -847,6 +903,11 @@ namespace Foundation
 						case reflect::FieldType::Model:
 						{
 							*(std::vector<SharedPtr<Model>>*)memberPtr = j.get<std::vector<SharedPtr<Model>>>();
+							break;
+						}
+						case reflect::FieldType::ParticleProperties:
+						{
+							*(std::vector<ParticleProperties>*)memberPtr = j.get<std::vector<ParticleProperties>>();
 							break;
 						}
 						case reflect::FieldType::Class:

@@ -26,6 +26,7 @@ enum class FieldType
 	Colour,
 	Texture,
 	Model,
+	ParticleProperties,
 	Class,
 	Vector
 };
@@ -44,24 +45,25 @@ struct TypeDescriptor {
 		std::string fieldTypeString{""};
 		switch (fieldType)
 		{
-			case FieldType::None:		fieldTypeString = "None";		break;
-			case FieldType::Float:		fieldTypeString = "Float";		break;
-			case FieldType::Float2:		fieldTypeString = "Float2";		break;
-			case FieldType::Float3:		fieldTypeString = "Float3";		break;
-			case FieldType::Float4:		fieldTypeString = "Float4";		break;
-			case FieldType::Mat3:		fieldTypeString = "Mat3";		break;
-			case FieldType::Mat4:		fieldTypeString = "Mat4";		break;
-			case FieldType::Int:		fieldTypeString = "Int";		break;
-			case FieldType::Int2:		fieldTypeString = "Int2";		break;
-			case FieldType::Int3:		fieldTypeString = "Int3";		break;
-			case FieldType::Int4:		fieldTypeString = "Int4";		break;
-			case FieldType::Bool:		fieldTypeString = "Bool";		break;
-			case FieldType::String:		fieldTypeString = "String";		break;
-			case FieldType::Colour:		fieldTypeString = "Colour";		break;
-			case FieldType::Texture:	fieldTypeString = "Texture";	break;
-			case FieldType::Model:		fieldTypeString = "Model";		break;
-			case FieldType::Class:		fieldTypeString = "Class";		break;
-			case FieldType::Vector:		fieldTypeString = "Vector";		break;
+			case FieldType::None:					fieldTypeString = "None";					break;
+			case FieldType::Float:					fieldTypeString = "Float";					break;
+			case FieldType::Float2:					fieldTypeString = "Float2";					break;
+			case FieldType::Float3:					fieldTypeString = "Float3";					break;
+			case FieldType::Float4:					fieldTypeString = "Float4";					break;
+			case FieldType::Mat3:					fieldTypeString = "Mat3";					break;
+			case FieldType::Mat4:					fieldTypeString = "Mat4";					break;
+			case FieldType::Int:					fieldTypeString = "Int";					break;
+			case FieldType::Int2:					fieldTypeString = "Int2";					break;
+			case FieldType::Int3:					fieldTypeString = "Int3";					break;
+			case FieldType::Int4:					fieldTypeString = "Int4";					break;
+			case FieldType::Bool:					fieldTypeString = "Bool";					break;
+			case FieldType::String:					fieldTypeString = "String";					break;
+			case FieldType::Colour:					fieldTypeString = "Colour";					break;
+			case FieldType::Texture:				fieldTypeString = "Texture";				break;
+			case FieldType::Model:					fieldTypeString = "Model";					break;
+			case FieldType::ParticleProperties:		fieldTypeString = "ParticleProperties";		break;
+			case FieldType::Class:					fieldTypeString = "Class";					break;
+			case FieldType::Vector:					fieldTypeString = "Vector";					break;
 			default: break;
 		}
 

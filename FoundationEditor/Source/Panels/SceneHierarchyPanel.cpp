@@ -13,6 +13,7 @@
 #include <Foundation/Components/TagComponent.h>
 #include <Foundation/Components/TransformComponent.h>
 #include <Foundation/Objects/Object.h>
+#include <Foundation/Particles/ParticleSystem.h>
 #include <Foundation/Renderer/Texture.h>
 #include <Foundation/Renderer/Model.h>
 #include <Foundation/Scene/Scene.h>
@@ -493,6 +494,37 @@ namespace Foundation
 
 				break;
 			}
+			case reflect::FieldType::ParticleProperties:
+			{
+				ParticleProperties particleProperties = *((ParticleProperties*)memberPtr);
+				
+				glm::vec3& velocityVariation = particleProperties.m_VelocityVariation;
+				DrawVec3Control("Velocity Variation", velocityVariation);
+				
+				glm::vec4& colourBegin = particleProperties.m_ColourBegin;
+				ImGui::ColorEdit4("Colour Begin", glm::value_ptr(colourBegin));
+
+				glm::vec4& colourEnd = particleProperties.m_ColourEnd;
+				ImGui::ColorEdit4("Colour End", glm::value_ptr(colourEnd));
+
+				glm::vec2& sizeBegin = particleProperties.m_SizeBegin;
+				DrawVec2Control("Size Begin", sizeBegin);
+
+				glm::vec2& sizeEnd = particleProperties.m_SizeEnd;
+				DrawVec2Control("Size End", sizeEnd);
+
+				glm::vec2& sizeVariation = particleProperties.m_SizeVariation;
+				DrawVec2Control("Size Variation", sizeVariation);
+
+				float& lifeTime = particleProperties.m_LifeTime;
+				if (ImGui::DragFloat("Lifetime", &lifeTime))
+				{
+					particleProperties.m_LifeTime = lifeTime;
+				}
+
+				*((ParticleProperties*)memberPtr) = particleProperties;
+				break;
+			}
 			case reflect::FieldType::Class:
 			{
 				// Found a class, so iterate over each of the members again.
@@ -599,7 +631,7 @@ namespace Foundation
 					}
 					case reflect::FieldType::Colour:
 					{
-						std::vector<Colour> stringVector = *(std::vector<Colour>*)memberPtr;
+						std::vector<Colour> colourVector = *(std::vector<Colour>*)memberPtr;
 						break;
 					}
 					case reflect::FieldType::Texture:
@@ -610,6 +642,11 @@ namespace Foundation
 					case reflect::FieldType::Model:
 					{
 						std::vector<SharedPtr<Model>> modelVector = *(std::vector<SharedPtr<Model>>*)memberPtr;
+						break;
+					}
+					case reflect::FieldType::ParticleProperties:
+					{
+						std::vector<ParticleProperties> particlePropertiesVector = *(std::vector<ParticleProperties>*)memberPtr;
 						break;
 					}
 					case reflect::FieldType::Class:

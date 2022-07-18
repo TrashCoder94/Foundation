@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 #include "Foundation/Core/Timestep.h"
 #include "Foundation/Renderer/OrthographicCamera.h"
+#include "Foundation/Renderer/Camera.h"
 
 namespace Foundation
 {
@@ -30,6 +31,7 @@ namespace Foundation
 
 			void OnUpdate(Timestep ts);
 			void OnRender(OrthographicCamera& orthographicCamera);
+			void OnRender(const Camera& camera, const glm::mat4& cameraTransform);
 
 		private:
 			struct Particle

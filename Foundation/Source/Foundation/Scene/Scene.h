@@ -5,6 +5,7 @@
 #include "Foundation/Objects/BaseObject.h"
 #include "Foundation/Renderer/Camera.h"
 #include "Foundation/Core/UUID.h"
+#include "Foundation/Particles/ParticleSystem.h"
 
 #include "Foundation/Components/IDComponent.h"
 #include "Foundation/Components/TagComponent.h"
@@ -69,6 +70,8 @@ namespace Foundation
 			const std::vector<Object*>& GetObjects() const;
 			const std::vector<Object*>& GetObjects();
 
+			ParticleSystem& GetParticleSystem();
+
 		private:
 			Object* CreateObjectWithID(UUID id, const std::string& name = "Object");
 
@@ -117,7 +120,8 @@ namespace Foundation
 			uint32_t m_ViewportWidth;
 			uint32_t m_ViewportHeight;
 			bool m_Running;
-			
+			ParticleSystem m_ParticleSystem;
+
 			friend class Object;
 			friend class SceneSerializer;
 			friend class SceneHierarchyPanel;

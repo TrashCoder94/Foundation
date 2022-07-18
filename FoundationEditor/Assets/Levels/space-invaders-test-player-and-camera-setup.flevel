@@ -1,6 +1,6 @@
 {
     "Level": {
-        "Name": "space-invaders-test",
+        "Name": "space-invaders-test-player-and-camera-setup",
         "Objects": {
             "CameraObject": {
                 "m_testFloat": 10.0,
@@ -92,79 +92,6 @@
                     "Y": 0.5,
                     "Z": 1.0
                 }
-            },
-            "EnemyManagerObject": {
-                "m_testFloat": 10.0,
-                "m_pComponents": {
-                    "IDComponent": {
-                        "m_UUID": -737883015
-                    },
-                    "TagComponent": {
-                        "m_Tag": "EnemyManagerObject"
-                    },
-                    "TransformComponent": {
-                        "m_Position": {
-                            "X": 0.0,
-                            "Y": 0.0,
-                            "Z": 0.0
-                        },
-                        "m_Rotation": {
-                            "X": 0.0,
-                            "Y": 0.0,
-                            "Z": 0.0
-                        },
-                        "m_Scale": {
-                            "X": 1.0,
-                            "Y": 1.0,
-                            "Z": 1.0
-                        }
-                    }
-                },
-                "m_testInt": 30,
-                "m_StartingPosition": {
-                    "X": -1.75,
-                    "Y": 2.0,
-                    "Z": -7.0
-                },
-                "m_Spacing": {
-                    "X": 1.25,
-                    "Y": 1.25
-                },
-                "m_NumberOfEnemiesPerRow": 4,
-                "m_NumberOfRows": 3,
-                "m_EnemyDeathParticleProperties": {
-                    "m_VelocityVariation": {
-                        "X": -2.0,
-                        "Y": -2.0,
-                        "Z": 0.0
-                    },
-                    "m_ColourBegin": {
-                        "X": 1.0,
-                        "Y": 0.0,
-                        "Z": 0.0,
-                        "W": 1.0
-                    },
-                    "m_ColourEnd": {
-                        "X": 0.10588235408067703,
-                        "Y": 0.16862745583057404,
-                        "Z": 1.0,
-                        "W": 1.0
-                    },
-                    "m_SizeBegin": {
-                        "X": 0.30000001192092896,
-                        "Y": 0.30000001192092896
-                    },
-                    "m_SizeEnd": {
-                        "X": 0.0,
-                        "Y": 0.0
-                    },
-                    "m_SizeVariation": {
-                        "X": 0.05000000074505806,
-                        "Y": 0.05000000074505806
-                    },
-                    "m_LifeTime": 2.0
-                },
-                "m_NumberOfParticlesToEmitPerDeath": 5
             }
         }
     }

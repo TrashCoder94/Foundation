@@ -88,4 +88,26 @@ namespace Foundation
 		}
 		Foundation::Renderer2D::EndScene();
 	}
+
+	void ParticleSystem::OnRender(const Camera& camera, const glm::mat4& cameraTransform)
+	{
+		Renderer2D::BeginScene(camera, cameraTransform);
+		{
+			for (Particle& particle : m_ParticlePool)
+			{
+				// Partice is not active.
+				if (!particle.m_IsActive)
+				{
+					continue;
+				}
+
+				float life = particle.m_LifeTimeRemaining / particle.m_LifeTime;
+				glm::vec4 colour = glm::lerp(particle.m_ColourEnd, particle.m_ColourBegin, life);
+
+				glm::vec2 size = glm::lerp(particle.m_SizeEnd, particle.m_SizeBegin, life);
+				Renderer2D::DrawQuad({ particle.m_Position, glm::radians(particle.m_Rotation), size, colour });
+			}
+		}
+		Renderer2D::EndScene();
+	}
 }

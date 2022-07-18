@@ -3,6 +3,11 @@
 #include <Reflect.h>
 #include "Foundation/Core/Log.h"
 
+#include <glm/glm.hpp>
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
+#include <glm/vec4.hpp>
+
 namespace Foundation
 {
 	class Event;
@@ -27,6 +32,9 @@ namespace Foundation
 			virtual void Update(float deltaTime) {}
 			virtual void End() {}
 			virtual void Destroy() {}
+
+			// For custom editor properties
+			virtual void ImGuiRender() {}
 
 			virtual void OnEvent(Event& event) {}
 

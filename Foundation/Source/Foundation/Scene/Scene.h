@@ -29,6 +29,9 @@ namespace Foundation
 			virtual void Update(float deltaTime) override;
 			virtual void End() override;
 			virtual void Destroy() override;
+
+			virtual void ImGuiRender() override;
+
 			void Render();
 
 			Object* CreateObject(const std::string& name = "Object");
@@ -96,7 +99,7 @@ namespace Foundation
 			template<typename T>
 			void OnComponentRemoved(Object* pObject, T* pComponent);
 
-			void IterateObjects(std::function<void(Object*)> function);
+			void IterateObjects(const std::function<void(Object*)>& function);
 
 			template<typename T>
 			void IterateObjectsWithComponent(std::function<void(T*)> function);

@@ -10,11 +10,12 @@
 namespace Foundation
 {
 	PlayerObject::PlayerObject() : Object(),
-		m_BulletSpeed(1.0f),
-		m_BulletSize(glm::vec3(1.0f)),
+		m_MoveSpeed(0.5f),
 		m_SpriteFrameDuration(0.5f),
 		m_pPlayerSprite1(nullptr),
 		m_pPlayerSprite2(nullptr),
+		m_BulletSpeed(1.0f),
+		m_BulletSize(glm::vec3(1.0f)),
 		m_pBullets(),
 		m_pTransformComponent(nullptr),
 		m_pInputComponent(nullptr),
@@ -47,7 +48,6 @@ namespace Foundation
 		if (m_pInputComponent)
 		{
 			m_pInputComponent->BindInputFunction<KeyPressedEvent>(this, FD_BIND_EVENT_FN(PlayerObject::OnKeyPressed));
-			m_pInputComponent->BindInputFunction<KeyReleasedEvent>(this, FD_BIND_EVENT_FN(PlayerObject::OnKeyReleased));
 		}
 		else
 		{
@@ -150,24 +150,15 @@ namespace Foundation
 
 	bool PlayerObject::OnKeyPressed(KeyPressedEvent& event)
 	{
-		if (event.GetKeyCode() == Key::Up || event.GetKeyCode() == Key::W)
-		{
-			m_pTransformComponent->m_Position.z -= 0.5f;
-		}
-		else if (event.GetKeyCode() == Key::Down || event.GetKeyCode() == Key::S)
-		{
-			m_pTransformComponent->m_Position.z += 0.5f;
-		}
-
 		if (event.GetKeyCode() == Key::Left || event.GetKeyCode() == Key::A)
 		{
-			m_pTransformComponent->m_Position.x -= 0.5f;
+			m_pTransformComponent->m_Position.x -= m_MoveSpeed;
 			m_pSpriteComponent->m_pTexture = m_pPlayerSprite2;
 			m_ShouldResetToSprite1OnNextFrame = true;
 		}
 		else if (event.GetKeyCode() == Key::Right || event.GetKeyCode() == Key::D)
 		{
-			m_pTransformComponent->m_Position.x += 0.5f;
+			m_pTransformComponent->m_Position.x += m_MoveSpeed;
 			m_pSpriteComponent->m_pTexture = m_pPlayerSprite2;
 			m_ShouldResetToSprite1OnNextFrame = true;
 		}
@@ -199,13 +190,6 @@ namespace Foundation
 				}
 			}
 		}
-
-		return false;
-	}
-
-	bool PlayerObject::OnKeyReleased(KeyReleasedEvent& event)
-	{
-		
 
 		return false;
 	}

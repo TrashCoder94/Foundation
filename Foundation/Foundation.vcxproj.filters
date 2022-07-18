@@ -276,6 +276,15 @@
     <ClInclude Include="Source\Foundation\SpaceInvadersTest\BulletObject.h">
       <Filter>Source\Foundation\SpaceInvadersTest</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Foundation\SpaceInvadersTest\EnemyManagerObject.h">
+      <Filter>Source\Foundation\SpaceInvadersTest</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Foundation\SpaceInvadersTest\EnemyMovementModes.h">
+      <Filter>Source\Foundation\SpaceInvadersTest</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Foundation\SpaceInvadersTest\EnemyObject.h">
+      <Filter>Source\Foundation\SpaceInvadersTest</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Foundation\SpaceInvadersTest\PlayerObject.h">
       <Filter>Source\Foundation\SpaceInvadersTest</Filter>
     </ClInclude>
@@ -1559,6 +1568,12 @@
     <ClCompile Include="..\Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation\Component_gen.cpp">
       <Filter>Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation</Filter>
     </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation\EnemyManagerObject_gen.cpp">
+      <Filter>Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation\EnemyObject_gen.cpp">
+      <Filter>Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation</Filter>
+    </ClCompile>
     <ClCompile Include="..\Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation\IDComponent_gen.cpp">
       <Filter>Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation</Filter>
     </ClCompile>
@@ -1719,6 +1734,12 @@
       <Filter>Source\Foundation\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Source\Foundation\SpaceInvadersTest\BulletObject.cpp">
+      <Filter>Source\Foundation\SpaceInvadersTest</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Foundation\SpaceInvadersTest\EnemyManagerObject.cpp">
+      <Filter>Source\Foundation\SpaceInvadersTest</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Foundation\SpaceInvadersTest\EnemyObject.cpp">
       <Filter>Source\Foundation\SpaceInvadersTest</Filter>
     </ClCompile>
     <ClCompile Include="Source\Foundation\SpaceInvadersTest\PlayerObject.cpp">

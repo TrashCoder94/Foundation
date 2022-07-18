@@ -60,7 +60,7 @@ namespace Foundation
 		if (m_pCurrentCameraObject)
 			m_pCurrentCameraObject->Start();
 
-		auto func = [](Object* pObject)
+		auto func = [this](Object* pObject)
 		{
 			pObject->Start();
 		};
@@ -74,7 +74,7 @@ namespace Foundation
 		if (m_pCurrentCameraObject)
 			m_pCurrentCameraObject->Update(deltaTime);
 
-		auto func = [&deltaTime](Object* pObject)
+		auto func = [this, &deltaTime](Object* pObject)
 		{
 			pObject->Update(deltaTime);
 		};
@@ -281,6 +281,11 @@ namespace Foundation
 		}
 	}
 
+	void Scene::ImGuiRender()
+	{
+		BaseObject::ImGuiRender();
+	}
+
 	void Scene::OnViewportResized(uint32_t width, uint32_t height)
 	{
 		m_ViewportWidth = width;
@@ -308,7 +313,7 @@ namespace Foundation
 		if (m_pCurrentCameraObject)
 			m_pCurrentCameraObject->OnEvent(event);
 
-		auto func = [&event](Object* pObject)
+		auto func = [this, &event](Object* pObject)
 		{
 			if (pObject)
 			{
@@ -355,10 +360,11 @@ namespace Foundation
 		}
 	}
 
-	void Scene::IterateObjects(std::function<void(Object*)> function)
+	void Scene::IterateObjects(const std::function<void(Object*)>& function)
 	{
-		for(Object* pObject : m_pObjects)
+		for(size_t iO = 0; iO < m_pObjects.size(); ++iO)
 		{
+			Object* pObject = m_pObjects[iO];
 			if (!pObject)
 				continue;
 

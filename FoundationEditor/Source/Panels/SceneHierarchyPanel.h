@@ -30,6 +30,7 @@ namespace Foundation
 			void IterateAllMembers(BaseObject* pClassObject, const reflect::TypeDescriptor_Struct& reflectedData, const UUID& uniqueObjectID);
 			void DrawMember(BaseObject* pClassObject, const reflect::TypeDescriptor_Struct::Member& member, const UUID& uniqueObjectID);
 
+			void DrawVec2Control(const std::string& label, glm::vec2& values, float resetValue = 0.0f, float columnWidth = 100.0f);
 			void DrawVec3Control(const std::string& label, glm::vec3& values, float resetValue = 0.0f, float columnWidth = 100.0f);
 			void DrawVec4Control(const std::string& label, glm::vec4& values, float resetValue = 0.0f, float columnWidth = 100.0f);
 

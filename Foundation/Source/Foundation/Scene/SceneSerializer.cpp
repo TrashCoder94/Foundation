@@ -913,7 +913,10 @@ namespace Foundation
 
 					for (const reflect::TypeDescriptor_Struct::Member& member : typeDescriptor.members)
 					{
-						deserializeMember(pObject, member, j["Level"]["Objects"][objectName][member.name]);
+						if (!j["Level"]["Objects"][objectName][member.name].is_null())
+						{
+							deserializeMember(pObject, member, j["Level"]["Objects"][objectName][member.name]);
+						}
 					}
 
 					scene.AddObject(pObject, pObject->GetComponent<TagComponent>()->m_Tag);

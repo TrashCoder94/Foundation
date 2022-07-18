@@ -30,6 +30,25 @@ namespace reflect {
 	}
 
 	//--------------------------------------------------------
+	// A type descriptor for Float2
+	//--------------------------------------------------------
+
+	struct TypeDescriptor_Float2 : TypeDescriptor {
+		TypeDescriptor_Float2() : TypeDescriptor{ "Float2", sizeof(glm::vec2), FieldType::Float2 } {
+		}
+		virtual void dump(const void* obj, int /* unused */) const override {
+			const glm::vec2* float2 = (const glm::vec2*)obj;
+			std::cout << "Float2{" << float2->x << ", " << float2->y << "}";
+		}
+	};
+
+	template <>
+	TypeDescriptor* getPrimitiveDescriptor<glm::vec2>() {
+		static TypeDescriptor_Float2 typeDesc;
+		return &typeDesc;
+	}
+
+	//--------------------------------------------------------
 	// A type descriptor for Float3
 	//--------------------------------------------------------
 

@@ -1,6 +1,6 @@
 {
     "Level": {
-        "Name": "space-invaders-test",
+        "Name": "Untitled",
         "Objects": {
             "CameraObject": {
                 "m_testFloat": 10.0,
@@ -10,7 +10,7 @@
                         "m_FixedAspectRatio": true
                     },
                     "IDComponent": {
-                        "m_UUID": 237967657
+                        "m_UUID": -1982166209
                     },
                     "TagComponent": {
                         "m_Tag": "CameraObject"
@@ -39,7 +39,7 @@
                 "m_testFloat": 10.0,
                 "m_pComponents": {
                     "InputComponent": {
-                        "m_UUID": 917033055
+                        "m_UUID": -763236443
                     },
                     "SpriteComponent": {
                         "m_Colour": {
@@ -54,7 +54,7 @@
                         "m_TilingFactor": 1.0
                     },
                     "IDComponent": {
-                        "m_UUID": -1004435934
+                        "m_UUID": -1396779028
                     },
                     "TagComponent": {
                         "m_Tag": "PlayerObject"
@@ -62,7 +62,7 @@
                     "TransformComponent": {
                         "m_Position": {
                             "X": 0.0,
-                            "Y": -2.0,
+                            "Y": -2.25,
                             "Z": -7.0
                         },
                         "m_Rotation": {
@@ -78,19 +78,60 @@
                     }
                 },
                 "m_testInt": 30,
-                "m_BulletSpeed": 10.0,
-                "m_BulletSize": {
-                    "X": 0.25,
-                    "Y": 0.5,
-                    "Z": 1.0
-                },
+                "m_MoveSpeed": 0.5,
                 "m_SpriteFrameDuration": 0.25,
                 "m_pPlayerSprite1": {
                     "m_Filepath": "C:\\SideProjects\\Repositories\\Foundation\\FoundationEditor\\Assets\\Textures\\Tray.png"
                 },
                 "m_pPlayerSprite2": {
                     "m_Filepath": "C:\\SideProjects\\Repositories\\Foundation\\FoundationEditor\\Assets\\Textures\\Tray2.png"
+                },
+                "m_BulletSpeed": 10.0,
+                "m_BulletSize": {
+                    "X": 0.25,
+                    "Y": 0.5,
+                    "Z": 1.0
                 }
+            },
+            "EnemyManagerObject": {
+                "m_testFloat": 10.0,
+                "m_pComponents": {
+                    "IDComponent": {
+                        "m_UUID": -1891981302
+                    },
+                    "TagComponent": {
+                        "m_Tag": "EnemyManagerObject"
+                    },
+                    "TransformComponent": {
+                        "m_Position": {
+                            "X": 0.0,
+                            "Y": 0.0,
+                            "Z": 0.0
+                        },
+                        "m_Rotation": {
+                            "X": 0.0,
+                            "Y": 0.0,
+                            "Z": 0.0
+                        },
+                        "m_Scale": {
+                            "X": 1.0,
+                            "Y": 1.0,
+                            "Z": 1.0
+                        }
+                    }
+                },
+                "m_testInt": 30,
+                "m_StartingPosition": {
+                    "X": -1.75,
+                    "Y": 2.0,
+                    "Z": -7.0
+                },
+                "m_Spacing": {
+                    "X": 1.25,
+                    "Y": 1.25
+                },
+                "m_NumberOfEnemiesPerRow": 4,
+                "m_NumberOfRows": 3
             }
         }
     }

@@ -92,11 +92,13 @@ namespace Foundation
 				ImGui::EndPopup();
 			}
 
-			auto func = [this](Object* pObject)
+			for (Object* pObject : m_pScene->m_pObjects)
 			{
-				DrawObjectNode(pObject);
-			};
-			m_pScene->IterateObjects(func);
+				if (pObject)
+				{
+					DrawObjectNode(pObject);
+				}
+			}
 
 			if (ImGui::IsMouseDown(ImGuiMouseButton_Left) && ImGui::IsWindowHovered())
 			{
@@ -282,6 +284,8 @@ namespace Foundation
 		ImGui::PopItemWidth();
 		ImGui::Separator();
 
+		pObject->ImGuiRender();
+
 		const reflect::TypeDescriptor_Struct& objectReflectedData = pObject->GetTypeDescription();
 		IterateAllMembers(pObject, objectReflectedData, pObject->GetID());
 	}
@@ -328,10 +332,9 @@ namespace Foundation
 			}
 			case reflect::FieldType::Float2:
 			{
-				/*glm::vec2 float2Value = *((glm::vec2*)memberPtr);
+				glm::vec2 float2Value = *((glm::vec2*)memberPtr);
 				DrawVec2Control(member.name, float2Value);
-				*((glm::vec2*)memberPtr) = float2Value;*/
-				FD_CORE_ASSERT(false, "glm::vec2 not implemented in ThirdParty/Reflection/Reflect.cpp");
+				*((glm::vec2*)memberPtr) = float2Value;
 				break;
 			}
 			case reflect::FieldType::Float3:
@@ -690,6 +693,62 @@ namespace Foundation
 				break;
 			}
 		}
+	}
+
+	void SceneHierarchyPanel::DrawVec2Control(const std::string& label, glm::vec2& values, float resetValue /*= 0.0f*/, float columnWidth /*= 100.0f*/)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		ImFont* boldFont = io.Fonts->Fonts[0];
+
+		ImGui::PushID(label.c_str());
+
+		ImGui::Columns(2);
+		{
+			ImGui::SetColumnWidth(0, columnWidth);
+			ImGui::NextColumn();
+
+			ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
+			ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0, 0 });
+
+			float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
+			ImVec2 buttonSize = { lineHeight + 3.0f, lineHeight };
+
+			// X
+			ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.9f, 0.2f, 0.25f, 1.0f });
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
+			ImGui::PushFont(boldFont);
+			if (ImGui::Button("X", buttonSize))
+			{
+				values.x = resetValue;
+			}
+			ImGui::PopFont();
+			ImGui::PopStyleColor(3);
+			ImGui::SameLine();
+			ImGui::DragFloat("##X", &values.x, 0.1f);
+			ImGui::PopItemWidth();
+			ImGui::SameLine();
+
+			// Y
+			ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.2f, 0.7f, 0.2f, 1.0f });
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.3f, 0.8f, 0.3f, 1.0f });
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.2f, 0.7f, 0.2f, 1.0f });
+			ImGui::PushFont(boldFont);
+			if (ImGui::Button("Y", buttonSize))
+			{
+				values.y = resetValue;
+			}
+			ImGui::PopFont();
+			ImGui::PopStyleColor(3);
+			ImGui::SameLine();
+			ImGui::DragFloat("##Y", &values.y, 0.1f);
+			ImGui::PopItemWidth();
+
+			ImGui::PopStyleVar();
+		}
+		ImGui::Columns(1);
+
+		ImGui::PopID();
 	}
 
 	void SceneHierarchyPanel::DrawVec3Control(const std::string& label, glm::vec3& values, float resetValue /*= 0.0f*/, float columnWidth /*= 100.0f*/)

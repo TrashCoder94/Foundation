@@ -4,13 +4,16 @@
 
 namespace Foundation
 {
+	class BulletObject;
 	class EnemyObject;
+	class PlayerObject;
 
 	struct EnemyRowData
 	{
 		EnemyRowData();
-		int m_Row;
 		EnemyObject* m_pEnemyObject;
+		int m_Row;
+		bool m_IsDead;
 	};
 
 	class EnemyManagerObject : public Object
@@ -45,7 +48,10 @@ namespace Foundation
 		void CreateEnemies();
 		void DestroyEnemies();
 
+		bool OnEnemyKilledBy(EnemyRowData& enemyRowData, BulletObject* pBullet);
+
 		std::vector<EnemyRowData> m_EnemyRows;
+		PlayerObject* m_pPlayerObject;
 
 		bool m_SpawnPreview;
 	};

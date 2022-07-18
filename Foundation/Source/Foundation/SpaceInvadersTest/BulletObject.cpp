@@ -79,4 +79,32 @@ namespace Foundation
 	{
 		m_Fired = false;
 	}
+
+	bool BulletObject::IsColliding(const glm::vec3& position, const glm::vec3& extent)
+	{
+		if (!m_pTransformComponent)
+		{
+			return false;
+		}
+
+		const glm::vec3& currentPosition = m_pTransformComponent->m_Position;
+
+		// AABB
+		const float halfXScale = (extent.x * 0.5f);
+		const float halfYScale = (extent.y * 0.5f);
+		const float maxXPosition = position.x + halfXScale;
+		const float minXPosition = position.x - halfXScale;
+		const float maxYPosition = position.y + halfYScale;
+		const float minYPosition = position.y - halfYScale;
+
+		// Check if this bullet is inside of the bounds given.
+		if ((currentPosition.x < maxXPosition && currentPosition.x > minXPosition)
+			&& (currentPosition.y < maxYPosition && currentPosition.y > minYPosition))
+		{
+			FD_CORE_LOG_INFO("BulletObject {0} is colliding with something", GetComponent<TagComponent>()->m_Tag);
+			return true;
+		}
+
+		return false;
+	}
 }

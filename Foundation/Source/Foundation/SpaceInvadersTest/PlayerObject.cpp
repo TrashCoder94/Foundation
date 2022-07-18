@@ -6,6 +6,7 @@
 #include "Foundation/Scene/Scene.h"
 #include "Foundation/SpaceInvadersTest/BulletObject.h"
 #include "Foundation/SpaceInvadersTest/PlayerObject.h"
+#include "Foundation/SpaceInvadersTest/EnemyManagerObject.h"
 
 namespace Foundation
 {

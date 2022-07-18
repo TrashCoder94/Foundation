@@ -1,6 +1,6 @@
 {
     "Level": {
-        "Name": "Untitled",
+        "Name": "space-invaders-test",
         "Objects": {
             "CameraObject": {
                 "m_testFloat": 10.0,

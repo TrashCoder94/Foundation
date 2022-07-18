@@ -27,6 +27,9 @@ namespace Foundation
 		void Fire();
 		void Reload();
 
+		bool IsColliding(const glm::vec3& position, const glm::vec3& extent);
+		bool HasBeenFired() const { return m_Fired; };
+
 		FVARIABLE(VariableFlags::Edit)
 			float m_Speed;
 

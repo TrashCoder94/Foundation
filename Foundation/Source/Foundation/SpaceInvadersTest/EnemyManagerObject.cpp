@@ -1,6 +1,8 @@
 #include "fdpch.h"
+#include "Foundation/SpaceInvadersTest/BulletObject.h"
 #include "Foundation/SpaceInvadersTest/EnemyManagerObject.h"
 #include "Foundation/SpaceInvadersTest/EnemyObject.h"
+#include "Foundation/SpaceInvadersTest/PlayerObject.h"
 #include "Foundation/Components/TagComponent.h"
 #include "Foundation/Components/TransformComponent.h"
 #include "Foundation/Scene/Scene.h"
@@ -11,7 +13,8 @@ namespace Foundation
 {
 	EnemyRowData::EnemyRowData() :
 		m_pEnemyObject(nullptr),
-		m_Row(0)
+		m_Row(0),
+		m_IsDead(false)
 	{}
 
 	EnemyManagerObject::EnemyManagerObject() : Object(),
@@ -20,6 +23,7 @@ namespace Foundation
 		m_NumberOfEnemiesPerRow(4),
 		m_NumberOfRows(3),
 		m_EnemyRows(),
+		m_pPlayerObject(nullptr),
 		m_SpawnPreview(false)
 	{}
 	
@@ -49,6 +53,19 @@ namespace Foundation
 					enemyRow.m_pEnemyObject->Start();
 				}
 			}
+
+			for (Object* pObject : pScene->GetObjects())
+			{
+				if (!pObject)
+				{
+					continue;
+				}
+
+				if (pObject->Is<PlayerObject>())
+				{
+					m_pPlayerObject = static_cast<PlayerObject*>(pObject);
+				}
+			}
 		}
 	}
 	
@@ -56,7 +73,40 @@ namespace Foundation
 	{
 		Object::Update(deltaTime);
 
+		if (m_pPlayerObject)
+		{
+			for (BulletObject* pBullet : m_pPlayerObject->GetBullets())
+			{
+				if (!pBullet || !pBullet->HasBeenFired())
+				{
+					continue;
+				}
 
+				bool bulletHasKilledSomething = false;
+				for (EnemyRowData& enemyRow : m_EnemyRows)
+				{
+					if (enemyRow.m_pEnemyObject)
+					{
+						if (TransformComponent* pEnemyTransformComponent = enemyRow.m_pEnemyObject->GetComponent<TransformComponent>())
+						{
+							if (pBullet->IsColliding(pEnemyTransformComponent->m_Position, pEnemyTransformComponent->m_Scale))
+							{
+								bulletHasKilledSomething = OnEnemyKilledBy(enemyRow, pBullet);
+								if (bulletHasKilledSomething)
+								{
+									break;
+								}
+							}
+						}
+					}
+				}
+
+				if (bulletHasKilledSomething)
+				{
+					break;
+				}
+			}
+		}
 	}
 	
 	void EnemyManagerObject::End()
@@ -147,5 +197,35 @@ namespace Foundation
 		}
 
 		m_EnemyRows.clear();
+	}
+
+	bool EnemyManagerObject::OnEnemyKilledBy(EnemyRowData& enemyRowData, BulletObject* pBullet)
+	{
+		// If this enemy is already dead
+		// We don't want to do anything with them.
+		if (enemyRowData.m_IsDead)
+		{
+			return false;
+		}
+
+		if (Scene* pScene = GetScene())
+		{
+			enemyRowData.m_IsDead = true;
+
+			pScene->RemoveObject(enemyRowData.m_pEnemyObject);
+			enemyRowData.m_pEnemyObject->End();
+			enemyRowData.m_pEnemyObject->Destroy();
+			
+			delete enemyRowData.m_pEnemyObject;
+			enemyRowData.m_pEnemyObject = nullptr;
+		}
+
+		pBullet->Reload();
+		pBullet->GetComponent<TransformComponent>()->m_Position = m_pPlayerObject->GetComponent<TransformComponent>()->m_Position;
+
+		// TODO: Spawn particles!
+		// TODO: Increment player score!
+		
+		return true;
 	}
 }

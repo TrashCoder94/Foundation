@@ -8,6 +8,7 @@
 namespace Foundation
 {
 	class BulletObject;
+	class EnemyManagerObject;
 	class InputComponent;
 	class KeyPressedEvent;
 	class KeyReleasedEvent;
@@ -27,6 +28,8 @@ namespace Foundation
 		virtual void Update(float deltaTime) override;
 		virtual void End() override;
 		virtual void Destroy() override;
+
+		const std::vector<BulletObject*>& GetBullets() const { return m_pBullets; }
 
 		FVARIABLE(VariableFlags::Edit)
 			float m_MoveSpeed;

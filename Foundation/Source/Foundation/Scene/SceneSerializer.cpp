@@ -976,7 +976,7 @@ namespace Foundation
 			const std::string& className = j["Level"]["Objects"][objectName]["Class"].get<std::string>();
 			if(void* pConstructedObject = reflect::ClassRegistry::Get().Construct(className))
 			{
-				if (Object* pObject = (Object*)pConstructedObject)
+				if (Object* pObject = static_cast<Object*>(pConstructedObject))
 				{
 					const reflect::TypeDescriptor_Struct& typeDescriptor = pObject->GetTypeDescription();
 

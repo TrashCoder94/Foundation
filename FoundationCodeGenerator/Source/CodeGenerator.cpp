@@ -175,7 +175,7 @@ namespace Foundation
 				bool foundReflectionMacro = false;
 
 				// Recursive function to populate children classes with their reflected parent properties.
-				std::function<void(std::ifstream& inputFile, std::string& reflectionStringToWriteTo, bool& bFoundReflectionMacro, bool beingCalledFromChildClass, const std::string& parentClassName)> readFileFunc = [this, &readFileFunc](std::ifstream& inputFile, std::string& reflectionStringToWriteTo, bool& bFoundReflectionMacro, bool beingCalledFromChildClass = false, std::string parentClassName = "")
+				std::function<void(std::ifstream& inputFile, std::string& reflectionStringToWriteTo, bool& bFoundReflectionMacro, bool beingCalledFromChildClass, const std::string& parentClassName)> readFileFunc = [this, &readFileFunc](std::ifstream& inputFile, std::string& reflectionStringToWriteTo, bool& bFoundReflectionMacro, bool beingCalledFromChildClass = false, const std::string& parentClassName = "")
 				{
 					if (!inputFile.is_open())
 					{

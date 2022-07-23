@@ -23,6 +23,7 @@ namespace Foundation
 		m_pEnemySprite1(nullptr),
 		m_pEnemySprite2(nullptr),
 		m_EnemySpriteFrameDuration(1.0f),
+		m_ScorePerEnemy(10),
 		m_GameOverYPosition(-2.0f),
 		m_NumberOfEnemiesPerRow(5),
 		m_NumberOfRows(2),
@@ -284,6 +285,11 @@ namespace Foundation
 
 	bool EnemyManagerObject::OnEnemyKilledBy(EnemyObject* pEnemy, BulletObject* pBullet)
 	{
+		if (!m_pPlayerObject)
+		{
+			return false;
+		}
+
 		// If this enemy is already dead
 		// We don't want to do anything with them.
 		if (pEnemy->IsDead())
@@ -305,7 +311,7 @@ namespace Foundation
 			pBullet->Reload();
 			pBullet->GetComponent<TransformComponent>()->m_Position = m_pPlayerObject->GetComponent<TransformComponent>()->m_Position;
 			
-			// TODO: Increment player score!
+			m_pPlayerObject->AddScore(m_ScorePerEnemy);
 
 			bool areAllEnemiesDead = true;
 			for (Object* pObject : pScene->GetObjects())

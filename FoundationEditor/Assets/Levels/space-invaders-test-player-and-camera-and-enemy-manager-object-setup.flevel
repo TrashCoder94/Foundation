@@ -185,6 +185,7 @@
                     "m_Filepath": "C:\\SideProjects\\Repositories\\Foundation\\FoundationEditor\\Assets\\Textures\\Tray2.png"
                 },
                 "m_EnemySpriteFrameDuration": 0.25,
+                "m_ScorePerEnemy": 10,
                 "m_GameOverYPosition": -2.0,
                 "m_NumberOfEnemiesPerRow": 8,
                 "m_NumberOfRows": 2,

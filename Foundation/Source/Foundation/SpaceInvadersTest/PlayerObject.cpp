@@ -28,6 +28,7 @@ namespace Foundation
 		m_pSpriteComponent(nullptr),
 		m_CurrentAnimationFrame(0.0f),
 		m_CurrentWinParticleTime(0.0f),
+		m_CurrentScore(0),
 		m_ShouldResetToSprite1OnNextFrame(false)
 	{
 		AddComponent<InputComponent>();
@@ -232,6 +233,12 @@ namespace Foundation
 	void PlayerObject::Destroy()
 	{
 		Object::Destroy();
+	}
+
+	void PlayerObject::AddScore(const int scoreToAdd)
+	{
+		m_CurrentScore += scoreToAdd;
+		FD_CORE_LOG_INFO("Player Score: {0}", m_CurrentScore);
 	}
 
 	bool PlayerObject::OnKeyPressed(KeyPressedEvent& event)

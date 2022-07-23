@@ -55,6 +55,9 @@ namespace Foundation
 			float m_EnemySpriteFrameDuration;
 
 		FVARIABLE(VariableFlags::Edit)
+			int m_ScorePerEnemy;
+
+		FVARIABLE(VariableFlags::Edit)
 			float m_GameOverYPosition;
 
 		FVARIABLE(VariableFlags::Edit)

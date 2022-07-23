@@ -30,6 +30,7 @@ namespace Foundation
 		virtual void End() override;
 		virtual void Destroy() override;
 
+		void AddScore(const int scoreToAdd);
 		const std::vector<BulletObject*>& GetBullets() const { return m_pBullets; }
 
 		FVARIABLE(VariableFlags::Edit)
@@ -73,6 +74,7 @@ namespace Foundation
 
 		float m_CurrentAnimationFrame;
 		float m_CurrentWinParticleTime;
+		int m_CurrentScore;
 		bool m_ShouldResetToSprite1OnNextFrame;
 	};
 }

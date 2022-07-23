@@ -7,6 +7,7 @@
 #include "Foundation/SpaceInvadersTest/BulletObject.h"
 #include "Foundation/SpaceInvadersTest/PlayerObject.h"
 #include "Foundation/SpaceInvadersTest/EnemyManagerObject.h"
+#include "Foundation/Core/Random.h"
 
 namespace Foundation
 {
@@ -17,12 +18,16 @@ namespace Foundation
 		m_pPlayerSprite2(nullptr),
 		m_BulletSpeed(10.0f),
 		m_BulletSize(glm::vec3(0.25, 0.5f, 1.0f)),
+		m_PlayerWinParticleProperties(),
+		m_NumberOfParticlesToEmit(10),
+		m_TimeBetweenWinParticles(2.0f),
 		m_pBullets(),
 		m_pEnemyManagerObject(nullptr),
 		m_pTransformComponent(nullptr),
 		m_pInputComponent(nullptr),
 		m_pSpriteComponent(nullptr),
 		m_CurrentAnimationFrame(0.0f),
+		m_CurrentWinParticleTime(0.0f),
 		m_ShouldResetToSprite1OnNextFrame(false)
 	{
 		AddComponent<InputComponent>();
@@ -134,6 +139,30 @@ namespace Foundation
 		{
 			if (m_pEnemyManagerObject->IsGameOver())
 			{
+				return;
+			}
+
+			if (m_pEnemyManagerObject->HasPlayerWon())
+			{
+				m_CurrentWinParticleTime += deltaTime;
+				if (m_CurrentWinParticleTime >= m_TimeBetweenWinParticles)
+				{
+					const bool randXShouldBePositive = Random::Float() > 0.5f ? true : false;
+					const bool randYShouldBePositive = Random::Float() > 0.5f ? true : false;
+					const float randX = Random::Float() * (randXShouldBePositive ? 4.0f : -4.0f);
+					const float randY = Random::Float() * (randYShouldBePositive ? 2.0f : -2.0f);
+					const float z = -7.0f;
+					const glm::vec3 randomParticlePosition = glm::vec3(randX, randY, z);
+					m_PlayerWinParticleProperties.m_Position = randomParticlePosition;
+					m_PlayerWinParticleProperties.m_Rotation = 0.0f;
+
+					for (int iP = 0; iP < m_NumberOfParticlesToEmit; ++iP)
+					{
+						pScene->GetParticleSystem().Emit(m_PlayerWinParticleProperties);
+					}
+					m_CurrentWinParticleTime = 0.0f;
+				}
+
 				return;
 			}
 		}

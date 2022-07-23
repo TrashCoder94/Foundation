@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Foundation/Objects/Object.h"
+#include "Foundation/Particles/ParticleSystem.h"
 #include "Foundation/Renderer/Texture.h"
 
 #include <glm/glm.hpp>
@@ -49,6 +50,15 @@ namespace Foundation
 		FVARIABLE(VariableFlags::Edit)
 			glm::vec3 m_BulletSize;
 
+		FVARIABLE(VariableFlags::Edit)
+			ParticleProperties m_PlayerWinParticleProperties;
+
+		FVARIABLE(VariableFlags::Edit)
+			int m_NumberOfParticlesToEmit;
+
+		FVARIABLE(VariableFlags::Edit)
+			float m_TimeBetweenWinParticles;
+
 	private:
 		bool OnKeyPressed(KeyPressedEvent& event);
 
@@ -62,6 +72,7 @@ namespace Foundation
 		SpriteComponent* m_pSpriteComponent;
 
 		float m_CurrentAnimationFrame;
+		float m_CurrentWinParticleTime;
 		bool m_ShouldResetToSprite1OnNextFrame;
 	};
 }

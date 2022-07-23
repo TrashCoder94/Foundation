@@ -22,7 +22,7 @@ namespace Foundation
 
 		// Position + Rotation
 		particle.m_Position = particleProps.m_Position;
-		particle.m_Rotation = Random::Float() * 2.0f * glm::pi<float>();
+		particle.m_Rotation = Random::Float() * 360.0f * glm::pi<float>();
 
 		// Velocity
 		particle.m_Velocity = particleProps.m_Velocity;

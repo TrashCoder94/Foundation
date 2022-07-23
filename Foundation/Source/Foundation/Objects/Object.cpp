@@ -9,9 +9,7 @@ namespace Foundation
 	{}
 
 	Object::Object(Scene* pScene) : BaseObject(),
-		m_testFloat(10.0f),
-		m_pComponents(),
-		m_testInt(30)
+		m_pComponents()
 	{}
 
 	Object::~Object()

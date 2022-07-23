@@ -13,6 +13,12 @@
     <Filter Include="Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation">
       <UniqueIdentifier>{A91243BC-95D2-D360-FEEF-BB6BEACEE672}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Intermediate\GeneratedCode\Release-windows-x86_64">
+      <UniqueIdentifier>{FDB1454F-6978-A26B-B2D3-30CE1ED910D0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Intermediate\GeneratedCode\Release-windows-x86_64\Foundation">
+      <UniqueIdentifier>{234613D5-0FB1-D3E0-B8CC-3846A41697C3}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source">
       <UniqueIdentifier>{56EB95D1-428D-C0A7-2B48-D4FB178947F8}</UniqueIdentifier>
     </Filter>
@@ -187,6 +193,9 @@
       <Filter>Source\Foundation\Events</Filter>
     </ClInclude>
     <ClInclude Include="Source\Foundation\Events\MouseEvent.h">
+      <Filter>Source\Foundation\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Foundation\Events\SceneEvent.h">
       <Filter>Source\Foundation\Events</Filter>
     </ClInclude>
     <ClInclude Include="Source\Foundation\ImGui\ImGuiLayer.h">
@@ -1603,6 +1612,54 @@
     </ClCompile>
     <ClCompile Include="..\Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation\TransformComponent_gen.cpp">
       <Filter>Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\BulletObject_gen.cpp">
+      <Filter>Intermediate\GeneratedCode\Release-windows-x86_64\Foundation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\CameraComponent_gen.cpp">
+      <Filter>Intermediate\GeneratedCode\Release-windows-x86_64\Foundation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\CameraObject_gen.cpp">
+      <Filter>Intermediate\GeneratedCode\Release-windows-x86_64\Foundation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\Component_gen.cpp">
+      <Filter>Intermediate\GeneratedCode\Release-windows-x86_64\Foundation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\EnemyManagerObject_gen.cpp">
+      <Filter>Intermediate\GeneratedCode\Release-windows-x86_64\Foundation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\EnemyObject_gen.cpp">
+      <Filter>Intermediate\GeneratedCode\Release-windows-x86_64\Foundation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\IDComponent_gen.cpp">
+      <Filter>Intermediate\GeneratedCode\Release-windows-x86_64\Foundation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\InputComponent_gen.cpp">
+      <Filter>Intermediate\GeneratedCode\Release-windows-x86_64\Foundation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\ModelComponent_gen.cpp">
+      <Filter>Intermediate\GeneratedCode\Release-windows-x86_64\Foundation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\Object_gen.cpp">
+      <Filter>Intermediate\GeneratedCode\Release-windows-x86_64\Foundation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\PlayerObject_gen.cpp">
+      <Filter>Intermediate\GeneratedCode\Release-windows-x86_64\Foundation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\ReflectionData_gen.cpp">
+      <Filter>Intermediate\GeneratedCode\Release-windows-x86_64\Foundation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\Scene_gen.cpp">
+      <Filter>Intermediate\GeneratedCode\Release-windows-x86_64\Foundation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\SpriteComponent_gen.cpp">
+      <Filter>Intermediate\GeneratedCode\Release-windows-x86_64\Foundation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\TagComponent_gen.cpp">
+      <Filter>Intermediate\GeneratedCode\Release-windows-x86_64\Foundation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\TransformComponent_gen.cpp">
+      <Filter>Intermediate\GeneratedCode\Release-windows-x86_64\Foundation</Filter>
     </ClCompile>
     <ClCompile Include="Source\Foundation\Components\CameraComponent.cpp">
       <Filter>Source\Foundation\Components</Filter>

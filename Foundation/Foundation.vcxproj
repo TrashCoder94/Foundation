@@ -190,6 +190,7 @@
     <ClInclude Include="Source\Foundation\Events\Event.h" />
     <ClInclude Include="Source\Foundation\Events\KeyEvent.h" />
     <ClInclude Include="Source\Foundation\Events\MouseEvent.h" />
+    <ClInclude Include="Source\Foundation\Events\SceneEvent.h" />
     <ClInclude Include="Source\Foundation\ImGui\ImGuiLayer.h" />
     <ClInclude Include="Source\Foundation\Network\Client.h" />
     <ClInclude Include="Source\Foundation\Network\MessageTypes.h" />
@@ -709,6 +710,70 @@
     </ClCompile>
     <ClCompile Include="..\Intermediate\GeneratedCode\Debug-windows-x86_64\Foundation\TransformComponent_gen.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\BulletObject_gen.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\CameraComponent_gen.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\CameraObject_gen.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\Component_gen.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\EnemyManagerObject_gen.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\EnemyObject_gen.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\IDComponent_gen.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\InputComponent_gen.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\ModelComponent_gen.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\Object_gen.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\PlayerObject_gen.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\ReflectionData_gen.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\Scene_gen.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\SpriteComponent_gen.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\TagComponent_gen.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Intermediate\GeneratedCode\Release-windows-x86_64\Foundation\TransformComponent_gen.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Source\Foundation\Components\CameraComponent.cpp" />

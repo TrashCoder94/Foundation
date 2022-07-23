@@ -472,7 +472,7 @@ namespace Foundation
 					if (BaseObject* pClass = ((BaseObject*)memberPtr))
 					{
 						const reflect::TypeDescriptor_Struct& classTypeDescriptor{ pClass->GetTypeDescription() };
-
+						
 						json classArray = json::array();
 						for (const reflect::TypeDescriptor_Struct::Member& classMember : classTypeDescriptor.members)
 						{
@@ -593,7 +593,7 @@ namespace Foundation
 							{
 								const reflect::TypeDescriptor_Struct& classVectorTypeDescriptor{ pClassVecObject->GetTypeDescription() };
 								const std::string& classVectorObjectName{ classVectorTypeDescriptor.getFullName() };
-
+								
 								for (const reflect::TypeDescriptor_Struct::Member& classVectorMember : classVectorTypeDescriptor.members)
 								{
 									serializeMember(pClassVecObject, classVectorMember, j[classVectorObjectName][classVectorMember.name]);
@@ -628,9 +628,11 @@ namespace Foundation
 				continue;
 
 			const reflect::TypeDescriptor_Struct& typeDescriptor{ pObject->GetTypeDescription() };
+			const std::string& className{ typeDescriptor.getFullName() };
 			const std::string& objectName{ pObject->GetComponent<TagComponent>()->m_Tag };
 			BaseObject* pBaseObject = static_cast<BaseObject*>(pObject);
-
+			
+			j["Level"]["Objects"][objectName]["Class"] = className;
 			for (const reflect::TypeDescriptor_Struct::Member& member : typeDescriptor.members)
 			{
 				serializeMember(pBaseObject, member, j["Level"]["Objects"][objectName][member.name]);
@@ -715,7 +717,12 @@ namespace Foundation
 			const std::string& memberName = member.name;
 			void* memberPtr = (void*)((char*)pBaseObject + member.offset);
 			const reflect::FieldType& fieldType = member.type->getFieldType();
-			
+		
+			if (j.is_null())
+			{
+				return;
+			}
+
 			switch (fieldType)
 			{
 				case reflect::FieldType::Float:
@@ -966,7 +973,8 @@ namespace Foundation
 		for (json::const_iterator it = jsonObjectsArray.begin(); it != jsonObjectsArray.end(); ++it)
 		{
 			const std::string& objectName = it.key();
-			if(void* pConstructedObject = reflect::ClassRegistry::Get().Construct(objectName))
+			const std::string& className = j["Level"]["Objects"][objectName]["Class"].get<std::string>();
+			if(void* pConstructedObject = reflect::ClassRegistry::Get().Construct(className))
 			{
 				if (Object* pObject = (Object*)pConstructedObject)
 				{
@@ -974,7 +982,7 @@ namespace Foundation
 
 					for (const reflect::TypeDescriptor_Struct::Member& member : typeDescriptor.members)
 					{
-						if (!j["Level"]["Objects"][objectName][member.name].is_null())
+						if (j["Level"]["Objects"][objectName].contains(member.name))
 						{
 							deserializeMember(pObject, member, j["Level"]["Objects"][objectName][member.name]);
 						}

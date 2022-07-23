@@ -1,13 +1,16 @@
 #include "fdpch.h"
 #include "Scene.h"
 
+#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <Reflect.h>
 
+#include "Foundation/Core/Application.h"
 #include "Foundation/Components/CameraComponent.h"
 #include "Foundation/Components/ModelComponent.h"
 #include "Foundation/Components/SpriteComponent.h"
 #include "Foundation/Events/Event.h"
+#include "Foundation/Events/SceneEvent.h"
 #include "Foundation/Objects/Object.h"
 #include "Foundation/Objects/CameraObject.h"
 #include "Foundation/Renderer/Renderer2D.h"
@@ -24,7 +27,8 @@ namespace Foundation
 		m_ViewportWidth(0),
 		m_ViewportHeight(0),
 		m_Running(false),
-		m_ParticleSystem(1000)
+		m_ParticleSystem(1000),
+		m_SceneLoaded(false)
 	{
 	}
 
@@ -66,6 +70,8 @@ namespace Foundation
 			pObject->Start();
 		};
 		IterateObjects(func);
+
+		m_SceneLoaded = true;
 	}
 
 	void Scene::Update(float deltaTime)
@@ -106,6 +112,8 @@ namespace Foundation
 				pObject->End();
 			}
 		}
+
+		m_SceneLoaded = false;
 	}
 
 	void Scene::Destroy()

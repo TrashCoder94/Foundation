@@ -6,6 +6,7 @@
 
 namespace Foundation
 {
+	class EnemyManagerObject;
 	class SpriteComponent;
 	class TransformComponent;
 
@@ -15,6 +16,7 @@ namespace Foundation
 
 	public:
 		EnemyObject();
+		EnemyObject(const EnemyObject& enemyObject) = default;
 		~EnemyObject();
 
 		virtual void Create() override;
@@ -23,10 +25,14 @@ namespace Foundation
 		virtual void End() override;
 		virtual void Destroy() override;
 
+		void Show();
+		void Hide();
 		void SetMovementMode(const EnemyMovementMode movementMode);
+		bool IsDead() const;
+		void SetIsDead(const bool isDead);
 
 		FVARIABLE(VariableFlags::Edit)
-			float m_MoveSpeed;
+			glm::vec2 m_MoveSpeed;
 
 		FVARIABLE(VariableFlags::Edit)
 			float m_SpriteFrameDuration;
@@ -38,6 +44,7 @@ namespace Foundation
 			SharedPtr<Texture2D> m_pEnemySprite2;
 
 	private:
+		EnemyManagerObject* m_pEnemyManagerObject;
 		TransformComponent* m_pTransformComponent;
 		SpriteComponent* m_pSpriteComponent;
 
@@ -45,5 +52,6 @@ namespace Foundation
 
 		float m_CurrentAnimationFrame;
 		bool m_ShouldResetToSprite1OnNextFrame;
+		bool m_IsDead;
 	};
 }

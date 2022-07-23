@@ -55,6 +55,8 @@ namespace Foundation
 	private:
 		std::vector<BulletObject*> m_pBullets;
 
+		EnemyManagerObject* m_pEnemyManagerObject;
+
 		TransformComponent* m_pTransformComponent;
 		InputComponent* m_pInputComponent;
 		SpriteComponent* m_pSpriteComponent;

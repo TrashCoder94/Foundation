@@ -147,10 +147,15 @@ namespace Foundation
 
 		ImGui::Begin("Properties");
 		{
-			if (m_pSelectedObject)
+			Object* pSelectedObject = m_pSelectedObject;
+			m_pSelectedObject = nullptr;
+
+			if (pSelectedObject)
 			{
-				DrawComponentProperties(m_pSelectedObject);
+				DrawComponentProperties(pSelectedObject);
 			}
+
+			m_pSelectedObject = pSelectedObject;
 		}
 		ImGui::End();
 	}
@@ -206,6 +211,11 @@ namespace Foundation
 
 	void SceneHierarchyPanel::DrawComponentProperties(Object* pObject)
 	{
+		if (!pObject)
+		{
+			return;
+		}
+
 		// Tag Component
 		if (pObject->HasComponent<TagComponent>())
 		{

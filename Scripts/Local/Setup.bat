@@ -15,6 +15,7 @@ echo "Generating assimp project using CMake"
 cmake Foundation\ThirdParty\assimp\CMakeLists.txt -BFoundation\ThirdParty\assimp\ -G"Visual Studio 16 2019"
 if %errorlevel% neq 0 exit /b %errorlevel%
 devenv Foundation\ThirdParty\assimp\Assimp.sln /rebuild Debug /project ALL_BUILD
+devenv Foundation\ThirdParty\assimp\Assimp.sln /rebuild Release /project ALL_BUILD
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 echo "Generating Projects with Premake"

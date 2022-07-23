@@ -90,18 +90,19 @@ namespace Foundation
 		const glm::vec3& currentPosition = m_pTransformComponent->m_Position;
 
 		// AABB
-		const float halfXScale = (extent.x * 0.5f);
-		const float halfYScale = (extent.y * 0.5f);
-		const float maxXPosition = position.x + halfXScale;
-		const float minXPosition = position.x - halfXScale;
-		const float maxYPosition = position.y + halfYScale;
-		const float minYPosition = position.y - halfYScale;
+		const float aHalfXScale = (extent.x * 0.5f);
+		const float aHalfYScale = (extent.y * 0.5f);
+		const float aMaxXPosition = position.x + aHalfXScale;
+		const float aMinXPosition = position.x - aHalfXScale;
+		const float aMaxYPosition = position.y + aHalfYScale;
+		const float aMinYPosition = position.y - aHalfYScale;
 
 		// Check if this bullet is inside of the bounds given.
-		if ((currentPosition.x < maxXPosition && currentPosition.x > minXPosition)
-			&& (currentPosition.y < maxYPosition && currentPosition.y > minYPosition))
+		if (currentPosition.x <= aMaxXPosition 
+			&& currentPosition.x >= aMinXPosition
+			&& currentPosition.y <= aMaxYPosition 
+			&& currentPosition.y >= aMinYPosition)
 		{
-			FD_CORE_LOG_INFO("BulletObject {0} is colliding with something", GetComponent<TagComponent>()->m_Tag);
 			return true;
 		}
 

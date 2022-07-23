@@ -8,14 +8,7 @@ namespace Foundation
 	class BulletObject;
 	class EnemyObject;
 	class PlayerObject;
-
-	struct EnemyRowData
-	{
-		EnemyRowData();
-		EnemyObject* m_pEnemyObject;
-		int m_Row;
-		bool m_IsDead;
-	};
+	class Texture2D;
 
 	class EnemyManagerObject : public Object
 	{
@@ -31,13 +24,38 @@ namespace Foundation
 		virtual void End() override;
 		virtual void Destroy() override;
 
-		virtual void ImGuiRender() override;
+		const bool IsGameOver();
+		const bool HasPlayerWon();
 
 		FVARIABLE(VariableFlags::Edit)
 			glm::vec3 m_StartingPosition;
 
 		FVARIABLE(VariableFlags::Edit)
+			glm::vec3 m_StartingSize;
+
+		FVARIABLE(VariableFlags::Edit)
 			glm::vec2 m_Spacing;
+
+		FVARIABLE(VariableFlags::Edit)
+			float m_MinXPositionToTriggerDownMovement;
+
+		FVARIABLE(VariableFlags::Edit)
+			float m_MaxXPositionToTriggerDownMovement;
+
+		FVARIABLE(VariableFlags::Edit)
+			glm::vec2 m_EnemyMoveSpeed;
+
+		FVARIABLE(VariableFlags::Edit)
+			SharedPtr<Texture2D> m_pEnemySprite1;
+
+		FVARIABLE(VariableFlags::Edit)
+			SharedPtr<Texture2D> m_pEnemySprite2;
+
+		FVARIABLE(VariableFlags::Edit)
+			float m_EnemySpriteFrameDuration;
+
+		FVARIABLE(VariableFlags::Edit)
+			float m_GameOverYPosition;
 
 		FVARIABLE(VariableFlags::Edit)
 			int m_NumberOfEnemiesPerRow;
@@ -53,13 +71,14 @@ namespace Foundation
 
 	private:
 		void CreateEnemies();
-		void DestroyEnemies();
+		bool OnEnemyKilledBy(EnemyObject* pEnemy, BulletObject* pBullet);
 
-		bool OnEnemyKilledBy(EnemyRowData& enemyRowData, BulletObject* pBullet);
-
-		std::vector<EnemyRowData> m_EnemyRows;
 		PlayerObject* m_pPlayerObject;
 
 		bool m_SpawnPreview;
+		bool m_MovingRight;
+		bool m_SpawnedEnemies;
+		bool m_PlayerWon;
+		bool m_GameOver;
 	};
 }

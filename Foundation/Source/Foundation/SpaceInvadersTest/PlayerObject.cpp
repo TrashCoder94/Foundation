@@ -12,12 +12,13 @@ namespace Foundation
 {
 	PlayerObject::PlayerObject() : Object(),
 		m_MoveSpeed(0.5f),
-		m_SpriteFrameDuration(0.5f),
+		m_SpriteFrameDuration(0.25f),
 		m_pPlayerSprite1(nullptr),
 		m_pPlayerSprite2(nullptr),
-		m_BulletSpeed(1.0f),
-		m_BulletSize(glm::vec3(1.0f)),
+		m_BulletSpeed(10.0f),
+		m_BulletSize(glm::vec3(0.25, 0.5f, 1.0f)),
 		m_pBullets(),
+		m_pEnemyManagerObject(nullptr),
 		m_pTransformComponent(nullptr),
 		m_pInputComponent(nullptr),
 		m_pSpriteComponent(nullptr),
@@ -76,11 +77,66 @@ namespace Foundation
 		}
 
 		m_pSpriteComponent->m_pTexture = m_pPlayerSprite1;
+
+		if (Scene* pScene = GetScene())
+		{
+			for (Object* pObject : pScene->GetObjects())
+			{
+				if (!pObject || !pObject->Is<EnemyManagerObject>())
+				{
+					continue;
+				}
+
+				EnemyManagerObject* pEnemyManagerObject = static_cast<EnemyManagerObject*>(pObject);
+				if (!m_pEnemyManagerObject)
+				{
+					m_pEnemyManagerObject = pEnemyManagerObject;
+					break;
+				}
+			}
+		}
 	}
 
 	void PlayerObject::Update(float deltaTime)
 	{
 		Object::Update(deltaTime);
+
+		Scene* pScene = GetScene();
+		if (!pScene)
+		{
+			return;
+		}
+
+		if (!pScene->IsLoaded())
+		{
+			return;
+		}
+
+		if (!m_pEnemyManagerObject)
+		{
+			for (Object* pObject : pScene->GetObjects())
+			{
+				if (!pObject || !pObject->Is<EnemyManagerObject>())
+				{
+					continue;
+				}
+
+				EnemyManagerObject* pEnemyManagerObject = static_cast<EnemyManagerObject*>(pObject);
+				if (!m_pEnemyManagerObject)
+				{
+					m_pEnemyManagerObject = pEnemyManagerObject;
+					break;
+				}
+			}
+		}
+
+		if (m_pEnemyManagerObject)
+		{
+			if (m_pEnemyManagerObject->IsGameOver())
+			{
+				return;
+			}
+		}
 
 		if (m_ShouldResetToSprite1OnNextFrame)
 		{
@@ -151,6 +207,21 @@ namespace Foundation
 
 	bool PlayerObject::OnKeyPressed(KeyPressedEvent& event)
 	{
+		if (!m_pEnemyManagerObject)
+		{
+			return false;
+		}
+
+		if (m_pEnemyManagerObject->IsGameOver())
+		{
+			return false;
+		}
+
+		if (m_pEnemyManagerObject->HasPlayerWon())
+		{
+			return false;
+		}
+
 		if (event.GetKeyCode() == Key::Left || event.GetKeyCode() == Key::A)
 		{
 			m_pTransformComponent->m_Position.x -= m_MoveSpeed;
@@ -180,13 +251,6 @@ namespace Foundation
 					pBullet->m_pTransformComponent->m_Position = m_pTransformComponent->m_Position;
 					pBullet->m_Speed = m_BulletSpeed;
 					pBullet->Fire();
-
-					TagComponent* pBulletTagComponent = pBullet->GetComponent<TagComponent>();
-					const std::string& bulletName = pBulletTagComponent->m_Tag;
-					if (pBulletTagComponent)
-					{
-						FD_CORE_LOG_INFO("PlayerObject {0} fired bullet {1}", pTagComponent->m_Tag, bulletName);
-					}
 					break;
 				}
 			}

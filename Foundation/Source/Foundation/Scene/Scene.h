@@ -16,6 +16,8 @@ namespace Foundation
 	class Event;
 	class Object;
 	class CameraObject;
+	class SceneLoadedEvent;
+	class SpriteComponent;
 
 	class Scene : public BaseObject
 	{
@@ -48,7 +50,7 @@ namespace Foundation
 				if (!std::is_base_of<Object, T>::value)
 					return pResult;
 
-				T* pNewObject{ new T(this) };
+				T* pNewObject{ new T() };
 
 				pNewObject->AddComponent<TagComponent>(name);
 
@@ -91,8 +93,9 @@ namespace Foundation
 			UUID GetID() { return m_ID; }
 			const UUID GetID() const { return m_ID; }
 			const std::string& GetName() const { return m_Name; }
+			const bool IsLoaded() const { return m_SceneLoaded; }
 
-		private:
+		private:			
 			template<typename T>
 			void CopyComponents(const std::vector<Object*>& pSourceObjects, std::vector<Object*>& pDestinationObjects);
 
@@ -121,6 +124,7 @@ namespace Foundation
 			uint32_t m_ViewportHeight;
 			bool m_Running;
 			ParticleSystem m_ParticleSystem;
+			bool m_SceneLoaded;
 
 			friend class Object;
 			friend class SceneSerializer;

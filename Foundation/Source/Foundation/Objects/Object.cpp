@@ -66,7 +66,7 @@ namespace Foundation
 	{
 		BaseObject::Destroy();
 
-		auto func = [](Component* pComponent)
+		auto func = [](Component*& pComponent)
 		{
 			pComponent->Destroy();
 			delete pComponent;
@@ -162,7 +162,7 @@ namespace Foundation
 		return bHasComponent;
 	}
 
-	void Object::IterateComponents(std::function<void(Component*)> func)
+	void Object::IterateComponents(std::function<void(Component*&)> func)
 	{
 		for(std::vector<Component*>::iterator it = m_pComponents.begin(); it != m_pComponents.end(); ++it)
 		{

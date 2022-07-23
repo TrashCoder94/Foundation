@@ -143,7 +143,7 @@ namespace Foundation
 
 			bool HasComponent(Component* pComponentToFind) const;
 
-			void IterateComponents(std::function<void(Component*)> func);
+			void IterateComponents(std::function<void(Component*&)> func);
 
 			const UUID GetID() const;
 			const UUID GetSceneID() const;

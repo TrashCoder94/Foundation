@@ -166,12 +166,6 @@ namespace Foundation
 
 		public:
 			FVARIABLE(VariableFlags::Edit)
-				float m_testFloat;
-			
-			FVARIABLE(VariableFlags::Edit)
 				std::vector<Component*> m_pComponents;
-			
-			FVARIABLE(VariableFlags::Edit)
-				int m_testInt;
 	};
 }

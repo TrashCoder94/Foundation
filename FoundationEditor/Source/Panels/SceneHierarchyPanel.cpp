@@ -506,8 +506,10 @@ namespace Foundation
 			}
 			case reflect::FieldType::ParticleProperties:
 			{
+				ImGui::NewLine();
+
 				ParticleProperties particleProperties = *((ParticleProperties*)memberPtr);
-				
+
 				glm::vec3& velocityVariation = particleProperties.m_VelocityVariation;
 				DrawVec3Control("Velocity Variation", velocityVariation);
 				
